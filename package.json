@@ -1,0 +1,35 @@
+{
+  "name": "tree-sitter-arcana",
+  "version": "0.1.0",
+  "license": "MIT",
+  "types": "bindings/node",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prebuildify": "^6.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
+  },
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
+  "tree-sitter": [
+    {
+      "scope": "source.arcana",
+      "injection-regex": "^arcana$"
+    }
+  ]
+}
