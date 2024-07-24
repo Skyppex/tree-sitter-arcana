@@ -1,3 +1,23 @@
+const PREC = {
+  ASSIGNMENT: -2,
+  CONDITIONAL: -1,
+  DEFAULT: 0,
+  LOGICAL_OR: 1,
+  LOGICAL_AND: 2,
+  BITWISE_OR: 3,
+  BITWISE_XOR: 4,
+  BITWISE_AND: 5,
+  EQUAL: 6,
+  RELATIONAL: 7,
+  SHIFT: 9,
+  ADD: 10,
+  MULTIPLY: 11,
+  DECLARATION: 12,
+  UNARY: 14,
+  CALL: 15,
+  FIELD: 16,
+};
+
 module.exports = grammar({
   name: "arcana",
 
@@ -6,6 +26,7 @@ module.exports = grammar({
 
     _statement: ($) =>
       choice(
+        $.comment,
         $.struct_declaration,
         $.enum_declaration,
         $.union_declaration,
@@ -16,6 +37,10 @@ module.exports = grammar({
         $._expression,
       ),
 
+    comment: ($) => choice($.line_comment, $.block_comment),
+    line_comment: (_) => seq("//", /[^\n\r]*/),
+    block_comment: (_) => seq("/-", /[^-]*-+([^/-][^-]*-+)*/, "/"),
+
     struct_declaration: ($) =>
       seq(
         "struct",
@@ -23,6 +48,7 @@ module.exports = grammar({
         "{",
         commaSep(
           seq(
+            optional(repeat($.comment)),
             field("field_name", $.identifier),
             field("field_type", afterColon($.type_annotation)),
           ),
@@ -41,12 +67,14 @@ module.exports = grammar({
 
     enum_variant: ($) =>
       seq(
+        optional(repeat($.comment)),
         field("variant_name", $.identifier),
         optional(
           seq(
             "(",
             commaSep1(
               seq(
+                optional(repeat($.comment)),
                 field("field_name", $.identifier),
                 field("field_type", afterColon($.type_annotation)),
               ),
@@ -57,7 +85,13 @@ module.exports = grammar({
       ),
 
     union_declaration: ($) =>
-      seq("union", field("name", $.identifier), "{", commaSep($.literal), "}"),
+      seq(
+        "union",
+        field("name", $.identifier),
+        "{",
+        commaSep(seq(optional(repeat($.comment)), $.literal)),
+        "}",
+      ),
 
     function_declaration: ($) =>
       seq(
@@ -71,9 +105,11 @@ module.exports = grammar({
         field("body", $._expression),
       ),
 
-    break: ($) => seq("break", optional(field("value", $._expression)), ";"),
+    break: ($) => seq("break", choice(field("value", $._expression), ";")),
+
     continue: (_) => seq("continue", ";"),
-    return: ($) => seq("return", optional(field("value", $._expression)), ";"),
+
+    return: ($) => seq("return", choice(field("value", $._expression), ";")),
 
     identifier: (_) => /[_a-zA-Z]\w*/,
 
@@ -105,12 +141,13 @@ module.exports = grammar({
 
     _expression: ($) =>
       prec.left(
-        1,
+        0,
         seq(
           choice(
             $.loop,
             $.while,
             $.block,
+            $.asssignement,
             $.compund_assignement,
             $.binary_expression,
             $.variable_declaration,
@@ -126,6 +163,7 @@ module.exports = grammar({
       ),
 
     loop: ($) => seq("loop", field("body", $._expression)),
+
     while: ($) =>
       seq(
         "while",
@@ -135,9 +173,11 @@ module.exports = grammar({
 
     block: ($) => seq("{", repeat($._statement), "}"),
 
+    asssignement: ($) => seq($.identifier, "=", $._expression),
+
     compund_assignement: ($) =>
       prec.left(
-        1,
+        PREC.ASSIGNMENT,
         seq(
           $._expression,
           choice("+=", "-=", "*=", "/=", "%=", "&=", "|=", "^="),
@@ -145,48 +185,58 @@ module.exports = grammar({
         ),
       ),
 
-    binary_expression: ($) =>
+    binary_expression: ($) => {
+      const table = [
+        ["+", PREC.ADD],
+        ["-", PREC.ADD],
+        ["*", PREC.MULTIPLY],
+        ["/", PREC.MULTIPLY],
+        ["%", PREC.MULTIPLY],
+        ["||", PREC.LOGICAL_OR],
+        ["&&", PREC.LOGICAL_AND],
+        ["|", PREC.BITWISE_OR],
+        ["^", PREC.BITWISE_XOR],
+        ["&", PREC.BITWISE_AND],
+        ["==", PREC.EQUAL],
+        ["!=", PREC.EQUAL],
+        [">", PREC.RELATIONAL],
+        [">=", PREC.RELATIONAL],
+        ["<=", PREC.RELATIONAL],
+        ["<", PREC.RELATIONAL],
+        ["<<", PREC.SHIFT],
+        [">>", PREC.SHIFT],
+      ];
+
+      return choice(
+        ...table.map(([operator, precedence]) => {
+          return prec.left(
+            precedence,
+            seq(
+              field("left", $._expression),
+              field("operator", operator),
+              field("right", $._expression),
+            ),
+          );
+        }),
+      );
+    },
+
+    variable_declaration: ($) =>
       prec.left(
-        1,
+        PREC.DECLARATION,
         seq(
-          $._expression,
-          choice(
-            "+",
-            "-",
-            "*",
-            "/",
-            "%",
-            "&",
-            "|",
-            "^",
-            "<<",
-            ">>",
-            "&&",
-            "||",
-            "==",
-            "!=",
-            "<",
-            ">",
-            "<=",
-            ">=",
-          ),
+          "let",
+          optional("mut"),
+          $.identifier,
+          optional(afterColon($.type_annotation)),
+          "=",
           $._expression,
         ),
       ),
 
-    variable_declaration: ($) =>
-      seq(
-        "let",
-        optional("mut"),
-        $.identifier,
-        optional(afterColon($.type_annotation)),
-        "=",
-        $._expression,
-      ),
-
     if: ($) =>
       prec.left(
-        1,
+        PREC.CONDITIONAL,
         seq(
           "if",
           field("condition", $._expression),
