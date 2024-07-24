@@ -1700,7 +1700,7 @@
       ]
     },
     "variable_declaration": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 12,
       "content": {
         "type": "SEQ",
@@ -1903,7 +1903,7 @@
     },
     "call": {
       "type": "PREC_LEFT",
-      "value": 1,
+      "value": 15,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2007,18 +2007,52 @@
       }
     },
     "char": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "'.'"
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "'.'"
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "'\\\\.'"
+          }
+        }
+      ]
     },
     "string": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "\".*?\""
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "string_content"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "escape_sequence"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
     },
     "bool": {
       "type": "CHOICE",
@@ -2036,6 +2070,41 @@
     "unit": {
       "type": "STRING",
       "value": "unit"
+    },
+    "string_content": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\"\\\\\\n]+"
+        }
+      }
+    },
+    "escape_sequence": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "\\\\x[0-9a-fA-F]{2,4}"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\\\u[0-9a-fA-F]{4}"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\\\U[0-9a-fA-F]{8}"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\\\[abefnrtv'\\\"\\\\\\?0]"
+          }
+        ]
+      }
     }
   },
   "extras": [

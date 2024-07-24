@@ -222,7 +222,7 @@ module.exports = grammar({
     },
 
     variable_declaration: ($) =>
-      prec.left(
+      prec.right(
         PREC.DECLARATION,
         seq(
           "let",
@@ -272,7 +272,7 @@ module.exports = grammar({
 
     call: ($) =>
       prec.left(
-        1,
+        PREC.CALL,
         seq(
           field("callee", $._expression),
           "(",
@@ -285,10 +285,22 @@ module.exports = grammar({
 
     int: (_) => token(/-?\d+/),
     float: (_) => token(/-?\d+\.\d+/),
-    char: (_) => token(/'.'/),
-    string: (_) => token(/".*?"/),
+    char: (_) => choice(token(/'.'/), token(/'\\.'/)),
+    string: ($) =>
+      seq('"', repeat(choice($.string_content, $.escape_sequence)), '"'),
     bool: (_) => choice("true", "false"),
     unit: (_) => "unit",
+
+    string_content: (_) => token.immediate(prec(1, /[^"\\\n]+/)),
+    escape_sequence: (_) =>
+      token(
+        choice(
+          /\\x[0-9a-fA-F]{2,4}/,
+          /\\u[0-9a-fA-F]{4}/,
+          /\\U[0-9a-fA-F]{8}/,
+          /\\[abefnrtv'\"\\\?0]/,
+        ),
+      ),
   },
 });
 

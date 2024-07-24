@@ -578,6 +578,11 @@
     }
   },
   {
+    "type": "char",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "comment",
     "named": true,
     "fields": {},
@@ -1591,6 +1596,25 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "string_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "struct_declaration",
     "named": true,
     "fields": {
@@ -2031,6 +2055,10 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "%",
     "named": false
   },
@@ -2172,10 +2200,6 @@
   },
   {
     "type": "char",
-    "named": true
-  },
-  {
-    "type": "char",
     "named": false
   },
   {
@@ -2189,6 +2213,10 @@
   {
     "type": "enum",
     "named": false
+  },
+  {
+    "type": "escape_sequence",
+    "named": true
   },
   {
     "type": "false",
@@ -2216,11 +2244,11 @@
   },
   {
     "type": "int",
-    "named": true
+    "named": false
   },
   {
     "type": "int",
-    "named": false
+    "named": true
   },
   {
     "type": "let",
@@ -2243,7 +2271,7 @@
     "named": false
   },
   {
-    "type": "string",
+    "type": "string_content",
     "named": true
   },
   {
