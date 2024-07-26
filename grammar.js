@@ -146,6 +146,7 @@ module.exports = grammar({
           choice(
             $.loop,
             $.while,
+            $.for,
             $.block,
             $.asssignement,
             $.compund_assignement,
@@ -157,6 +158,7 @@ module.exports = grammar({
             $.call,
             $.literal,
             $.identifier,
+            $.range,
           ),
           optional(";"),
         ),
@@ -165,10 +167,27 @@ module.exports = grammar({
     loop: ($) => seq("loop", field("body", $._expression)),
 
     while: ($) =>
-      seq(
-        "while",
-        field("condition", $._expression),
-        field("body", $._expression),
+      prec.left(
+        PREC.CONDITIONAL,
+        seq(
+          "while",
+          field("condition", $._expression),
+          field("body", $._expression),
+          optional(seq("else", field("else_expr", $._expression))),
+        ),
+      ),
+
+    for: ($) =>
+      prec.left(
+        PREC.CONDITIONAL,
+        seq(
+          "for",
+          field("identifier", $.identifier),
+          "in",
+          field("iterable", $._expression),
+          field("body", $._expression),
+          optional(seq("else", field("else_expr", $._expression))),
+        ),
       ),
 
     block: ($) => seq("{", repeat($._statement), "}"),
@@ -300,6 +319,16 @@ module.exports = grammar({
           /\\U[0-9a-fA-F]{8}/,
           /\\[abefnrtv'\"\\\?0]/,
         ),
+      ),
+
+    range: ($) =>
+      seq(
+        "[",
+        field("start", $._expression),
+        "..",
+        optional("="),
+        field("end", $._expression),
+        "]",
       ),
   },
 });

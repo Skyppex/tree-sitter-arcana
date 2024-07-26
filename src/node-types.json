@@ -28,6 +28,10 @@
           "named": true
         },
         {
+          "type": "for",
+          "named": true
+        },
+        {
           "type": "function_propagation",
           "named": true
         },
@@ -45,6 +49,10 @@
         },
         {
           "type": "loop",
+          "named": true
+        },
+        {
+          "type": "range",
           "named": true
         },
         {
@@ -95,6 +103,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -112,6 +124,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -235,6 +251,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -252,6 +272,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -315,6 +339,10 @@
           "named": true
         },
         {
+          "type": "for",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -336,6 +364,10 @@
         },
         {
           "type": "loop",
+          "named": true
+        },
+        {
+          "type": "range",
           "named": true
         },
         {
@@ -408,6 +440,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -425,6 +461,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -480,6 +520,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -497,6 +541,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -542,6 +590,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -559,6 +611,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -630,6 +686,10 @@
           "named": true
         },
         {
+          "type": "for",
+          "named": true
+        },
+        {
           "type": "function_propagation",
           "named": true
         },
@@ -647,6 +707,10 @@
         },
         {
           "type": "loop",
+          "named": true
+        },
+        {
+          "type": "range",
           "named": true
         },
         {
@@ -750,6 +814,232 @@
     }
   },
   {
+    "type": "for",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "asssignement",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "compund_assignement",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "else_expr": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "asssignement",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "compund_assignement",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "identifier": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "iterable": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "asssignement",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "compund_assignement",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "function_declaration",
     "named": true,
     "fields": {
@@ -782,6 +1072,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -799,6 +1093,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -884,6 +1182,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -901,6 +1203,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -946,6 +1252,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -963,6 +1273,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1014,6 +1328,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1031,6 +1349,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1076,6 +1398,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1093,6 +1419,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1142,6 +1472,10 @@
             "named": false
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1163,6 +1497,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1208,6 +1546,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1225,6 +1567,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1270,6 +1616,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1287,6 +1637,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1378,6 +1732,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1395,6 +1753,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1433,6 +1795,152 @@
     }
   },
   {
+    "type": "range",
+    "named": true,
+    "fields": {
+      "end": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "asssignement",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "compund_assignement",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "start": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "asssignement",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "compund_assignement",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "return",
     "named": true,
     "fields": {
@@ -1465,6 +1973,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1482,6 +1994,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1545,6 +2061,10 @@
           "named": true
         },
         {
+          "type": "for",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -1566,6 +2086,10 @@
         },
         {
           "type": "loop",
+          "named": true
+        },
+        {
+          "type": "range",
           "named": true
         },
         {
@@ -1697,6 +2221,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1714,6 +2242,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -1882,6 +2414,10 @@
           "named": true
         },
         {
+          "type": "for",
+          "named": true
+        },
+        {
           "type": "function_propagation",
           "named": true
         },
@@ -1899,6 +2435,10 @@
         },
         {
           "type": "loop",
+          "named": true
+        },
+        {
+          "type": "range",
           "named": true
         },
         {
@@ -1953,6 +2493,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -1970,6 +2514,10 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -2015,6 +2563,10 @@
             "named": true
           },
           {
+            "type": "for",
+            "named": true
+          },
+          {
             "type": "function_propagation",
             "named": true
           },
@@ -2032,6 +2584,80 @@
           },
           {
             "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "else_expr": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "asssignement",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "compund_assignement",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "range",
             "named": true
           },
           {
@@ -2112,6 +2738,10 @@
   },
   {
     "type": "-=",
+    "named": false
+  },
+  {
+    "type": "..",
     "named": false
   },
   {
@@ -2224,10 +2854,14 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
+    "named": true
+  },
+  {
+    "type": "for",
     "named": false
   },
   {
@@ -2240,6 +2874,10 @@
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "in",
     "named": false
   },
   {
