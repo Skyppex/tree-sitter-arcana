@@ -1,4 +1,5 @@
 const PREC = {
+  RANGE: -3,
   ASSIGNMENT: -2,
   CONDITIONAL: -1,
   DEFAULT: 0,
@@ -322,13 +323,14 @@ module.exports = grammar({
       ),
 
     range: ($) =>
-      seq(
-        "[",
-        field("start", $._expression),
-        "..",
-        optional("="),
-        field("end", $._expression),
-        "]",
+      prec.left(
+        PREC.RANGE,
+        seq(
+          field("start", $._expression),
+          "..",
+          optional("="),
+          field("end", $._expression),
+        ),
       ),
   },
 });
