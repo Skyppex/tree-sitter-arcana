@@ -3,18 +3,19 @@ const PREC = {
   ASSIGNMENT: -2,
   CONDITIONAL: -1,
   DEFAULT: 0,
-  LOGICAL_OR: 1,
-  LOGICAL_AND: 2,
-  BITWISE_OR: 3,
-  BITWISE_XOR: 4,
-  BITWISE_AND: 5,
-  EQUAL: 6,
-  RELATIONAL: 7,
+  DECLARATION: 1,
+  LOGICAL_OR: 2,
+  LOGICAL_AND: 3,
+  BITWISE_OR: 4,
+  BITWISE_XOR: 5,
+  BITWISE_AND: 6,
+  EQUAL: 7,
+  RELATIONAL: 8,
   SHIFT: 9,
   ADD: 10,
   MULTIPLY: 11,
-  DECLARATION: 12,
-  UNARY: 14,
+  UNARY: 13,
+  TRAILING_CLOSURE: 14,
   CALL: 15,
   FIELD: 16,
 };
@@ -145,27 +146,30 @@ module.exports = grammar({
         0,
         seq(
           choice(
+            $.range,
             $.loop,
             $.while,
             $.for,
             $.block,
             $.asssignement,
             $.compund_assignement,
-            $.binary_expression,
+            $.binary,
             $.variable_declaration,
             $.if,
-            $.trailing_closure,
+            $.unary,
             $.function_propagation,
+            $.trailing_closure,
             $.call,
+            $.member,
             $.literal,
             $.identifier,
-            $.range,
           ),
           optional(";"),
         ),
       ),
 
-    loop: ($) => seq("loop", field("body", $._expression)),
+    loop: ($) =>
+      prec.left(PREC.CONDITIONAL, seq("loop", field("body", $._expression))),
 
     while: ($) =>
       prec.left(
@@ -191,9 +195,13 @@ module.exports = grammar({
         ),
       ),
 
-    block: ($) => seq("{", repeat($._statement), "}"),
+    block: ($) => seq("{", field("statements", repeat($._statement)), "}"),
 
-    asssignement: ($) => seq($.identifier, "=", $._expression),
+    asssignement: ($) =>
+      prec.left(
+        PREC.ASSIGNMENT,
+        seq(field("member", $._expression), "=", field("value", $._expression)),
+      ),
 
     compund_assignement: ($) =>
       prec.left(
@@ -205,7 +213,7 @@ module.exports = grammar({
         ),
       ),
 
-    binary_expression: ($) => {
+    binary: ($) => {
       const table = [
         ["+", PREC.ADD],
         ["-", PREC.ADD],
@@ -242,15 +250,15 @@ module.exports = grammar({
     },
 
     variable_declaration: ($) =>
-      prec.right(
+      prec(
         PREC.DECLARATION,
         seq(
           "let",
           optional("mut"),
-          $.identifier,
-          optional(afterColon($.type_annotation)),
+          field("var_name", $.identifier),
+          optional(field("type", afterColon($.type_annotation))),
           "=",
-          $._expression,
+          field("initializer", $._expression),
         ),
       ),
 
@@ -265,11 +273,14 @@ module.exports = grammar({
             field(
               "else_ifs",
               repeat(
-                seq(
-                  "else",
-                  "if",
-                  field("condition", $._expression),
-                  field("expr", $._expression),
+                prec.left(
+                  PREC.DEFAULT,
+                  seq(
+                    "else",
+                    "if",
+                    field("condition", $._expression),
+                    field("expr", $._expression),
+                  ),
                 ),
               ),
             ),
@@ -278,11 +289,28 @@ module.exports = grammar({
         ),
       ),
 
-    trailing_closure: ($) => seq("=>", field("body", $._expression)),
+    unary: ($) =>
+      prec.right(
+        PREC.UNARY,
+        seq(
+          field("operator", choice("+", "-", "!", "~")),
+          field("operand", $._expression),
+        ),
+      ),
+
+    trailing_closure: ($) =>
+      prec.left(
+        PREC.TRAILING_CLOSURE,
+        seq(
+          field("function", $._expression),
+          "=>",
+          field("body", $._expression),
+        ),
+      ),
 
     function_propagation: ($) =>
       prec.left(
-        1,
+        PREC.FIELD,
         seq(
           field("prop", $._expression),
           ":",
@@ -299,6 +327,12 @@ module.exports = grammar({
           field("args", commaSep($._expression)),
           ")",
         ),
+      ),
+
+    member: ($) =>
+      prec.left(
+        PREC.FIELD,
+        seq(field("object", $._expression), ".", field("member", $.identifier)),
       ),
 
     literal: ($) => choice($.int, $.float, $.char, $.string, $.bool, $.unit),
