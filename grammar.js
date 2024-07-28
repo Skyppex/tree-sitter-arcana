@@ -18,6 +18,8 @@ const PREC = {
   TRAILING_CLOSURE: 14,
   CALL: 15,
   FIELD: 16,
+  IDENTIFIER: 17,
+  LITERAL: 20,
 };
 
 module.exports = grammar({
@@ -63,7 +65,7 @@ module.exports = grammar({
         "enum",
         field("name", $.identifier),
         "{",
-        field("variants", commaSep($.enum_variant)),
+        commaSep($.enum_variant),
         "}",
       ),
 
@@ -73,7 +75,7 @@ module.exports = grammar({
         field("variant_name", $.identifier),
         optional(
           seq(
-            "(",
+            "{",
             commaSep1(
               seq(
                 optional(repeat($.comment)),
@@ -81,7 +83,7 @@ module.exports = grammar({
                 field("field_type", afterColon($.type_annotation)),
               ),
             ),
-            ")",
+            "}",
           ),
         ),
       ),
@@ -113,7 +115,7 @@ module.exports = grammar({
 
     return: ($) => seq("return", choice(field("value", $._expression), ";")),
 
-    identifier: (_) => /[_a-zA-Z]\w*/,
+    identifier: (_) => prec(PREC.IDENTIFIER, /[_a-zA-Z]\w*/),
 
     parameters: ($) =>
       commaSep1(seq($.identifier, afterColon($.type_annotation))),
@@ -130,6 +132,11 @@ module.exports = grammar({
           "char",
           "string",
           seq("[", field("array_type", $.type_annotation), "]"),
+          seq(
+            field("enum_name", $.identifier),
+            "::",
+            field("enum_variant", $.identifier),
+          ),
           $.identifier,
           seq(
             "fun",
@@ -151,8 +158,8 @@ module.exports = grammar({
             $.while,
             $.for,
             $.block,
-            $.asssignement,
-            $.compund_assignement,
+            $.assignment,
+            $.compund_assignment,
             $.binary,
             $.variable_declaration,
             $.if,
@@ -161,6 +168,8 @@ module.exports = grammar({
             $.trailing_closure,
             $.call,
             $.member,
+            $.struct_literal,
+            $.enum_literal,
             $.literal,
             $.identifier,
           ),
@@ -197,13 +206,13 @@ module.exports = grammar({
 
     block: ($) => seq("{", field("statements", repeat($._statement)), "}"),
 
-    asssignement: ($) =>
+    assignment: ($) =>
       prec.left(
         PREC.ASSIGNMENT,
         seq(field("member", $._expression), "=", field("value", $._expression)),
       ),
 
-    compund_assignement: ($) =>
+    compund_assignment: ($) =>
       prec.left(
         PREC.ASSIGNMENT,
         seq(
@@ -270,17 +279,14 @@ module.exports = grammar({
           field("condition", $._expression),
           field("true_expr", $._expression),
           optional(
-            field(
-              "else_ifs",
-              repeat(
-                prec.left(
-                  PREC.DEFAULT,
-                  seq(
-                    "else",
-                    "if",
-                    field("condition", $._expression),
-                    field("expr", $._expression),
-                  ),
+            repeat(
+              prec.left(
+                PREC.DEFAULT,
+                seq(
+                  "else",
+                  "if",
+                  field("condition", $._expression),
+                  field("expr", $._expression),
                 ),
               ),
             ),
@@ -335,15 +341,52 @@ module.exports = grammar({
         seq(field("object", $._expression), ".", field("member", $.identifier)),
       ),
 
-    literal: ($) => choice($.int, $.float, $.char, $.string, $.bool, $.unit),
+    struct_literal: ($) =>
+      prec(
+        PREC.LITERAL,
+        seq(
+          field("struct_name", $.identifier),
+          "{",
+          optional(field("fields", $.fields)),
+          "}",
+        ),
+      ),
 
-    int: (_) => token(/-?\d+/),
-    float: (_) => token(/-?\d+\.\d+/),
+    enum_literal: ($) =>
+      prec(
+        PREC.LITERAL,
+        seq(
+          field("enum_name", $.identifier),
+          "::",
+          field("enum_variant", $.identifier),
+          "{",
+          optional(field("fields", $.fields)),
+          "}",
+        ),
+      ),
+
+    literal: ($) =>
+      prec(
+        PREC.LITERAL,
+        choice($.unit, $.bool, $.int, $.float, $.char, $.string),
+      ),
+
+    unit: (_) => "unit",
+    bool: (_) => choice("true", "false"),
+    int: (_) => token(/\d+/),
+    float: (_) => token(/\d+\.\d+/),
     char: (_) => choice(token(/'.'/), token(/'\\.'/)),
+
     string: ($) =>
       seq('"', repeat(choice($.string_content, $.escape_sequence)), '"'),
-    bool: (_) => choice("true", "false"),
-    unit: (_) => "unit",
+
+    fields: ($) =>
+      commaSep1(
+        seq(
+          field("field_name", $.identifier),
+          field("field_initializer", afterColon($._expression)),
+        ),
+      ),
 
     string_content: (_) => token.immediate(prec(1, /[^"\\\n]+/)),
     escape_sequence: (_) =>
