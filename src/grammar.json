@@ -1018,13 +1018,25 @@
     },
     "loop": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -1,
       "content": {
         "type": "SEQ",
         "members": [
           {
             "type": "STRING",
             "value": "loop"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "=>"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "FIELD",
@@ -1039,7 +1051,7 @@
     },
     "while": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -1,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1056,15 +1068,15 @@
             }
           },
           {
+            "type": "STRING",
+            "value": "=>"
+          },
+          {
             "type": "FIELD",
             "name": "body",
             "content": {
-              "type": "PREC_RIGHT",
-              "value": 0,
-              "content": {
-                "type": "SYMBOL",
-                "name": "_expression"
-              }
+              "type": "SYMBOL",
+              "name": "_expression"
             }
           },
           {
@@ -1076,6 +1088,18 @@
                   {
                     "type": "STRING",
                     "value": "else"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "=>"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "FIELD",
@@ -1097,7 +1121,7 @@
     },
     "for": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -1,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1126,15 +1150,15 @@
             }
           },
           {
+            "type": "STRING",
+            "value": "=>"
+          },
+          {
             "type": "FIELD",
             "name": "body",
             "content": {
-              "type": "PREC_RIGHT",
-              "value": 0,
-              "content": {
-                "type": "SYMBOL",
-                "name": "_expression"
-              }
+              "type": "SYMBOL",
+              "name": "_expression"
             }
           },
           {
@@ -1146,6 +1170,18 @@
                   {
                     "type": "STRING",
                     "value": "else"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "=>"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "FIELD",
@@ -1166,28 +1202,32 @@
       }
     },
     "block": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_statement"
+      "type": "PREC",
+      "value": 21,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "{"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_statement"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "}"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
+        ]
+      }
     },
     "assignment": {
       "type": "PREC_LEFT",
-      "value": 1,
+      "value": -2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1216,7 +1256,7 @@
     },
     "compound_assignment": {
       "type": "PREC_LEFT",
-      "value": 1,
+      "value": -2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1947,7 +1987,7 @@
     },
     "if": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -1,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2101,7 +2141,7 @@
           },
           {
             "type": "STRING",
-            "value": "=>"
+            "value": "->"
           },
           {
             "type": "FIELD",

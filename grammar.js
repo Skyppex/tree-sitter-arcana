@@ -1,8 +1,8 @@
 const PREC = {
   RANGE: -3,
-  CONDITIONAL: -2,
+  ASSIGNMENT: -2,
+  CONDITIONAL: -1,
   DEFAULT: 0,
-  ASSIGNMENT: 1,
   DECLARATION: 2,
   LOGICAL_OR: 3,
   LOGICAL_AND: 4,
@@ -20,6 +20,7 @@ const PREC = {
   FIELD: 17,
   IDENTIFIER: 18,
   LITERAL: 20,
+  BLOCK: 21,
 };
 
 module.exports = grammar({
@@ -178,7 +179,10 @@ module.exports = grammar({
       ),
 
     loop: ($) =>
-      prec.left(PREC.CONDITIONAL, seq("loop", field("body", $._expression))),
+      prec.left(
+        PREC.CONDITIONAL,
+        seq("loop", optional("=>"), field("body", $._expression)),
+      ),
 
     while: ($) =>
       prec.left(
@@ -186,8 +190,11 @@ module.exports = grammar({
         seq(
           "while",
           field("condition", $._expression),
-          field("body", prec.right(PREC.DEFAULT, $._expression)),
-          optional(seq("else", field("else_expr", $._expression))),
+          "=>",
+          field("body", $._expression),
+          optional(
+            seq("else", optional("=>"), field("else_expr", $._expression)),
+          ),
         ),
       ),
 
@@ -199,12 +206,15 @@ module.exports = grammar({
           field("identifier", $.identifier),
           "in",
           field("iterable", $._expression),
-          field("body", prec.right(PREC.DEFAULT, $._expression)),
-          optional(seq("else", field("else_expr", $._expression))),
+          "=>",
+          field("body", $._expression),
+          optional(
+            seq("else", optional("=>"), field("else_expr", $._expression)),
+          ),
         ),
       ),
 
-    block: ($) => seq("{", repeat($._statement), "}"),
+    block: ($) => prec(PREC.BLOCK, seq("{", repeat($._statement), "}")),
 
     assignment: ($) =>
       prec.left(
@@ -309,7 +319,7 @@ module.exports = grammar({
         PREC.TRAILING_CLOSURE,
         seq(
           field("function", $._expression),
-          "=>",
+          "->",
           field("body", $._expression),
         ),
       ),
