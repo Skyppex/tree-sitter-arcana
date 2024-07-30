@@ -1,24 +1,24 @@
 const PREC = {
   RANGE: -3,
-  ASSIGNMENT: -2,
-  CONDITIONAL: -1,
+  CONDITIONAL: -2,
   DEFAULT: 0,
-  DECLARATION: 1,
-  LOGICAL_OR: 2,
-  LOGICAL_AND: 3,
-  BITWISE_OR: 4,
-  BITWISE_XOR: 5,
-  BITWISE_AND: 6,
-  EQUAL: 7,
-  RELATIONAL: 8,
-  SHIFT: 9,
-  ADD: 10,
-  MULTIPLY: 11,
-  UNARY: 13,
-  TRAILING_CLOSURE: 14,
-  CALL: 15,
-  FIELD: 16,
-  IDENTIFIER: 17,
+  ASSIGNMENT: 1,
+  DECLARATION: 2,
+  LOGICAL_OR: 3,
+  LOGICAL_AND: 4,
+  BITWISE_OR: 5,
+  BITWISE_XOR: 6,
+  BITWISE_AND: 7,
+  EQUAL: 8,
+  RELATIONAL: 9,
+  SHIFT: 10,
+  ADD: 11,
+  MULTIPLY: 12,
+  UNARY: 14,
+  TRAILING_CLOSURE: 15,
+  CALL: 16,
+  FIELD: 17,
+  IDENTIFIER: 18,
   LITERAL: 20,
 };
 
@@ -159,7 +159,7 @@ module.exports = grammar({
             $.for,
             $.block,
             $.assignment,
-            $.compund_assignment,
+            $.compound_assignment,
             $.binary,
             $.variable_declaration,
             $.if,
@@ -186,7 +186,7 @@ module.exports = grammar({
         seq(
           "while",
           field("condition", $._expression),
-          field("body", $._expression),
+          field("body", prec.right(PREC.DEFAULT, $._expression)),
           optional(seq("else", field("else_expr", $._expression))),
         ),
       ),
@@ -199,12 +199,12 @@ module.exports = grammar({
           field("identifier", $.identifier),
           "in",
           field("iterable", $._expression),
-          field("body", $._expression),
+          field("body", prec.right(PREC.DEFAULT, $._expression)),
           optional(seq("else", field("else_expr", $._expression))),
         ),
       ),
 
-    block: ($) => seq("{", field("statements", repeat($._statement)), "}"),
+    block: ($) => seq("{", repeat($._statement), "}"),
 
     assignment: ($) =>
       prec.left(
@@ -212,13 +212,13 @@ module.exports = grammar({
         seq(field("member", $._expression), "=", field("value", $._expression)),
       ),
 
-    compund_assignment: ($) =>
+    compound_assignment: ($) =>
       prec.left(
         PREC.ASSIGNMENT,
         seq(
-          $._expression,
+          field("member", $._expression),
           choice("+=", "-=", "*=", "/=", "%=", "&=", "|=", "^="),
-          $._expression,
+          field("value", $._expression),
         ),
       ),
 
