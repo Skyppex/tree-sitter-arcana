@@ -1,7 +1,8 @@
 const PREC = {
   COMMENT: -100,
-  CONDITIONAL: -2,
-  CLOSURE: -1,
+  CONDITIONAL: -3,
+  CLOSURE: -2,
+  MATCH: -1,
   ASSIGNMENT: 0,
   DEFAULT: 0,
   EXPRESSION: 0,
@@ -174,6 +175,7 @@ module.exports = grammar({
             $.unary,
             $.function_propagation,
             $.closure,
+            $.match,
             $.trailing_closure,
             $.call,
             $.member,
@@ -373,6 +375,41 @@ module.exports = grammar({
     closure_parameter: ($) =>
       seq($.identifier, optional(afterColon($.type_annotation))),
 
+    match: ($) =>
+      prec.left(
+        PREC.MATCH,
+        seq(field("matchee", $._expression), "match", $.match_arms),
+      ),
+
+    match_arms: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(
+          "|",
+          field("pattern", $.pattern),
+          "=>",
+          field("body", $._expression),
+        ),
+      ),
+
+    pattern: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        choice(
+          $.wildcard,
+          $.unit,
+          $.bool,
+          $.int,
+          $.uint,
+          $.float,
+          $.char,
+          $.string,
+          $.identifier,
+        ),
+      ),
+
+    wildcard: (_) => "_",
+
     call: ($) =>
       prec.left(
         PREC.CALL,
@@ -421,13 +458,14 @@ module.exports = grammar({
     literal: ($) =>
       prec(
         PREC.LITERAL,
-        choice($.unit, $.bool, $.int, $.float, $.char, $.string),
+        choice($.unit, $.bool, $.int, $.uint, $.float, $.char, $.string),
       ),
 
     unit: (_) => "unit",
     bool: (_) => choice("true", "false"),
-    int: (_) => token(/\d+/),
-    float: (_) => token(/\d+\.\d+/),
+    int: (_) => token(/\d+d?/),
+    uint: (_) => token(/\d+u/),
+    float: (_) => token(/\d+\.\d+f?/),
     char: (_) => choice(token(/'.'/), token(/'\\.'/)),
 
     string: ($) =>

@@ -918,6 +918,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "match"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "trailing_closure"
               },
               {
@@ -975,7 +979,7 @@
     },
     "loop": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -3,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1008,7 +1012,7 @@
     },
     "while": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -3,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1078,7 +1082,7 @@
     },
     "for": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -3,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1944,7 +1948,7 @@
     },
     "if": {
       "type": "PREC_LEFT",
-      "value": -2,
+      "value": -3,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2174,7 +2178,7 @@
     },
     "closure": {
       "type": "PREC_LEFT",
-      "value": -1,
+      "value": -2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2248,7 +2252,7 @@
     },
     "closure_parameters": {
       "type": "PREC_LEFT",
-      "value": -1,
+      "value": -2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2316,6 +2320,113 @@
           ]
         }
       ]
+    },
+    "match": {
+      "type": "PREC_LEFT",
+      "value": -1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "matchee",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "match"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "match_arms"
+          }
+        ]
+      }
+    },
+    "match_arms": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "|"
+          },
+          {
+            "type": "FIELD",
+            "name": "pattern",
+            "content": {
+              "type": "SYMBOL",
+              "name": "pattern"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "=>"
+          },
+          {
+            "type": "FIELD",
+            "name": "body",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          }
+        ]
+      }
+    },
+    "pattern": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "wildcard"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unit"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "bool"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "int"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "uint"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "float"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "char"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "string"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        ]
+      }
+    },
+    "wildcard": {
+      "type": "STRING",
+      "value": "_"
     },
     "call": {
       "type": "PREC_LEFT",
@@ -2542,6 +2653,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "uint"
+          },
+          {
+            "type": "SYMBOL",
             "name": "float"
           },
           {
@@ -2576,14 +2691,21 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "\\d+"
+        "value": "\\d+d?"
+      }
+    },
+    "uint": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "\\d+u"
       }
     },
     "float": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "\\d+\\.\\d+"
+        "value": "\\d+\\.\\d+f?"
       }
     },
     "char": {
