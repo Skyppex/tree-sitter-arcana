@@ -1,25 +1,28 @@
 const PREC = {
-  RANGE: -3,
-  ASSIGNMENT: -2,
-  CONDITIONAL: -1,
+  COMMENT: -100,
+  CONDITIONAL: -2,
+  CLOSURE: -1,
+  ASSIGNMENT: 0,
   DEFAULT: 0,
+  EXPRESSION: 0,
   DECLARATION: 2,
-  LOGICAL_OR: 3,
-  LOGICAL_AND: 4,
-  BITWISE_OR: 5,
-  BITWISE_XOR: 6,
-  BITWISE_AND: 7,
-  EQUAL: 8,
-  RELATIONAL: 9,
-  SHIFT: 10,
-  ADD: 11,
-  MULTIPLY: 12,
+  RANGE: 3,
+  LOGICAL_OR: 4,
+  LOGICAL_AND: 5,
+  BITWISE_OR: 6,
+  BITWISE_XOR: 7,
+  BITWISE_AND: 8,
+  EQUAL: 9,
+  RELATIONAL: 10,
+  SHIFT: 11,
+  ADD: 12,
+  MULTIPLY: 13,
   UNARY: 14,
   TRAILING_CLOSURE: 15,
   CALL: 16,
   FIELD: 17,
-  IDENTIFIER: 18,
-  LITERAL: 20,
+  LITERAL: 18,
+  IDENTIFIER: 19,
   BLOCK: 21,
 };
 
@@ -36,9 +39,6 @@ module.exports = grammar({
         $.enum_declaration,
         $.union_declaration,
         $.function_declaration,
-        $.break,
-        $.continue,
-        $.return,
         $._expression,
       ),
 
@@ -51,42 +51,46 @@ module.exports = grammar({
         "struct",
         field("name", $.identifier),
         "{",
-        commaSep(
-          seq(
-            optional(repeat($.comment)),
-            field("field_name", $.identifier),
-            field("field_type", afterColon($.type_annotation)),
-          ),
-        ),
+        optional(field("fields", $.struct_fields)),
         "}",
       ),
 
-    enum_declaration: ($) =>
+    struct_fields: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(commaSepTrailing1($.struct_field), comments($)),
+      ),
+
+    struct_field: ($) =>
       seq(
-        "enum",
-        field("name", $.identifier),
-        "{",
-        commaSep($.enum_variant),
-        "}",
+        comments($),
+        field("field_name", $.identifier),
+        field("field_type", afterColon($.type_annotation)),
+      ),
+
+    enum_declaration: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(
+          "enum",
+          field("name", $.identifier),
+          "{",
+          optional(field("variants", $.enum_variants)),
+          "}",
+        ),
+      ),
+
+    enum_variants: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(commaSepTrailing1($.enum_variant), comments($)),
       ),
 
     enum_variant: ($) =>
       seq(
-        optional(repeat($.comment)),
+        comments($),
         field("variant_name", $.identifier),
-        optional(
-          seq(
-            "{",
-            commaSep1(
-              seq(
-                optional(repeat($.comment)),
-                field("field_name", $.identifier),
-                field("field_type", afterColon($.type_annotation)),
-              ),
-            ),
-            "}",
-          ),
-        ),
+        optional(seq("{", field("fields", $.struct_fields), "}")),
       ),
 
     union_declaration: ($) =>
@@ -94,9 +98,17 @@ module.exports = grammar({
         "union",
         field("name", $.identifier),
         "{",
-        commaSep(seq(optional(repeat($.comment)), $.literal)),
+        optional(field("variants", $.union_variants)),
         "}",
       ),
+
+    union_variants: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(commaSepTrailing1($.union_variant), comments($)),
+      ),
+
+    union_variant: ($) => seq(comments($), $.literal),
 
     function_declaration: ($) =>
       seq(
@@ -110,16 +122,11 @@ module.exports = grammar({
         field("body", $._expression),
       ),
 
-    break: ($) => seq("break", choice(field("value", $._expression), ";")),
-
-    continue: (_) => seq("continue", ";"),
-
-    return: ($) => seq("return", choice(field("value", $._expression), ";")),
-
     identifier: (_) => prec(PREC.IDENTIFIER, /[_a-zA-Z]\w*/),
 
-    parameters: ($) =>
-      commaSep1(seq($.identifier, afterColon($.type_annotation))),
+    parameters: ($) => commaSepTrailing1($.parameter),
+
+    parameter: ($) => seq($.identifier, afterColon($.type_annotation)),
 
     type_annotation: ($) =>
       field(
@@ -142,7 +149,7 @@ module.exports = grammar({
           seq(
             "fun",
             "(",
-            commaSep($.type_annotation),
+            commaSepTrailing($.type_annotation),
             ")",
             optional(afterColon($.type_annotation)),
           ),
@@ -151,7 +158,7 @@ module.exports = grammar({
 
     _expression: ($) =>
       prec.left(
-        0,
+        PREC.EXPRESSION,
         seq(
           choice(
             $.range,
@@ -166,6 +173,7 @@ module.exports = grammar({
             $.if,
             $.unary,
             $.function_propagation,
+            $.closure,
             $.trailing_closure,
             $.call,
             $.member,
@@ -173,6 +181,11 @@ module.exports = grammar({
             $.enum_literal,
             $.literal,
             $.identifier,
+
+            // These exoressions have no returning value
+            $.break,
+            $.continue,
+            $.return,
           ),
           optional(";"),
         ),
@@ -287,22 +300,29 @@ module.exports = grammar({
         seq(
           "if",
           field("condition", $._expression),
-          field("true_expr", $._expression),
-          optional(
-            repeat(
-              prec.left(
-                PREC.DEFAULT,
-                seq(
-                  "else",
-                  "if",
-                  field("condition", $._expression),
-                  field("expr", $._expression),
-                ),
-              ),
-            ),
-          ),
-          optional(seq("else", field("else_expr", $._expression))),
+          "=>",
+          field("expr", $._expression),
+          optional(repeat($.elif)),
+          optional($.else),
         ),
+      ),
+
+    elif: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(
+          "else",
+          "if",
+          field("condition", $._expression),
+          "=>",
+          field("expr", $._expression),
+        ),
+      ),
+
+    else: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq("else", optional("=>"), field("expr", $._expression)),
       ),
 
     unary: ($) =>
@@ -334,16 +354,39 @@ module.exports = grammar({
         ),
       ),
 
+    closure: ($) =>
+      prec.left(
+        PREC.CLOSURE,
+        seq(
+          "|",
+          optional(field("params", $.closure_parameters)),
+          "|",
+          optional(afterColon($.type_annotation)),
+          optional("=>"),
+          field("body", $._expression),
+        ),
+      ),
+
+    closure_parameters: ($) =>
+      prec.left(PREC.CLOSURE, commaSepTrailing1($.closure_parameter)),
+
+    closure_parameter: ($) =>
+      seq($.identifier, optional(afterColon($.type_annotation))),
+
     call: ($) =>
       prec.left(
         PREC.CALL,
         seq(
           field("callee", $._expression),
           "(",
-          field("args", commaSep($._expression)),
+          optional(field("args", $.arguments)),
           ")",
         ),
       ),
+
+    arguments: ($) => commaSepTrailing1($.argument),
+
+    argument: ($) => $._expression,
 
     member: ($) =>
       prec.left(
@@ -390,12 +433,12 @@ module.exports = grammar({
     string: ($) =>
       seq('"', repeat(choice($.string_content, $.escape_sequence)), '"'),
 
-    fields: ($) =>
-      commaSep1(
-        seq(
-          field("field_name", $.identifier),
-          field("field_initializer", afterColon($._expression)),
-        ),
+    fields: ($) => commaSepTrailing1($.field),
+
+    field: ($) =>
+      seq(
+        field("field_name", $.identifier),
+        field("field_initializer", afterColon($._expression)),
       ),
 
     string_content: (_) => token.immediate(prec(1, /[^"\\\n]+/)),
@@ -415,12 +458,32 @@ module.exports = grammar({
         seq(
           field("start", $._expression),
           "..",
-          optional("="),
+          optional($.inclusive),
           field("end", $._expression),
         ),
       ),
+
+    inclusive: (_) => "=",
+
+    break: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq("break", choice(field("value", $._expression), optional(";"))),
+      ),
+
+    continue: (_) => prec.left(PREC.DEFAULT, seq("continue", optional(";"))),
+
+    return: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq("return", choice(field("value", $._expression), optional(";"))),
+      ),
   },
 });
+
+function comments($) {
+  return prec(PREC.COMMENT, optional(repeat($.comment)));
+}
 
 function afterColon(rule) {
   return seq(":", rule);
@@ -430,6 +493,14 @@ function commaSep(rule) {
   return optional(commaSep1(rule));
 }
 
+function commaSepTrailing(rule) {
+  return optional(commaSepTrailing1(rule));
+}
+
 function commaSep1(rule) {
   return seq(rule, repeat(seq(",", rule)));
+}
+
+function commaSepTrailing1(rule) {
+  return seq(rule, repeat(seq(",", rule)), optional(","));
 }
