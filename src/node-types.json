@@ -32,6 +32,10 @@
           "named": true
         },
         {
+          "type": "collection",
+          "named": true
+        },
+        {
           "type": "compound_assignment",
           "named": true
         },
@@ -126,13 +130,9 @@
     "named": true,
     "fields": {
       "member": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -155,6 +155,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -232,13 +236,9 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -261,6 +261,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -344,13 +348,9 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -373,6 +373,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -528,13 +532,9 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -557,6 +557,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -665,6 +669,10 @@
         },
         {
           "type": "closure",
+          "named": true
+        },
+        {
+          "type": "collection",
           "named": true
         },
         {
@@ -777,13 +785,9 @@
     "named": true,
     "fields": {
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -806,6 +810,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -899,13 +907,9 @@
         ]
       },
       "callee": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -928,6 +932,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1016,13 +1024,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -1045,6 +1049,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1178,6 +1186,132 @@
     }
   },
   {
+    "type": "collection",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "collection_elements",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "collection_elements",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "call",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "compound_assignment",
+          "named": true
+        },
+        {
+          "type": "continue",
+          "named": true
+        },
+        {
+          "type": "enum_literal",
+          "named": true
+        },
+        {
+          "type": "for",
+          "named": true
+        },
+        {
+          "type": "function_propagation",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "loop",
+          "named": true
+        },
+        {
+          "type": "match",
+          "named": true
+        },
+        {
+          "type": "member",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "struct_literal",
+          "named": true
+        },
+        {
+          "type": "trailing_closure",
+          "named": true
+        },
+        {
+          "type": "unary",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "while",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "comment",
     "named": true,
     "fields": {},
@@ -1201,13 +1335,9 @@
     "named": true,
     "fields": {
       "member": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -1230,6 +1360,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1307,13 +1441,9 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -1336,6 +1466,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1424,13 +1558,9 @@
     "named": true,
     "fields": {
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -1453,6 +1583,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1530,13 +1664,9 @@
         ]
       },
       "expr": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -1559,6 +1689,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1642,13 +1776,9 @@
     "named": true,
     "fields": {
       "expr": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -1671,6 +1801,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -1879,10 +2013,6 @@
             "named": false
           },
           {
-            "type": ";",
-            "named": false
-          },
-          {
             "type": "assignment",
             "named": true
           },
@@ -1904,6 +2034,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2012,13 +2146,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2041,6 +2171,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2118,13 +2252,9 @@
         ]
       },
       "else_expr": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2147,6 +2277,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2234,13 +2368,9 @@
         ]
       },
       "iterable": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2263,6 +2393,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2346,13 +2480,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2375,6 +2505,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2492,13 +2626,9 @@
     "named": true,
     "fields": {
       "function": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2521,6 +2651,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2598,13 +2732,9 @@
         ]
       },
       "prop": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2627,6 +2757,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2715,13 +2849,9 @@
     "named": true,
     "fields": {
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2744,6 +2874,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2821,13 +2955,9 @@
         ]
       },
       "expr": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -2850,6 +2980,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -2996,13 +3130,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3025,6 +3155,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3108,13 +3242,9 @@
     "named": true,
     "fields": {
       "matchee": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3137,6 +3267,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3226,17 +3360,13 @@
     }
   },
   {
-    "type": "match_arms",
+    "type": "match_arm",
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3259,6 +3389,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3348,6 +3482,21 @@
     }
   },
   {
+    "type": "match_arms",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "match_arm",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "member",
     "named": true,
     "fields": {
@@ -3362,13 +3511,9 @@
         ]
       },
       "object": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3391,6 +3536,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3555,13 +3704,9 @@
     "named": true,
     "fields": {
       "end": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3584,6 +3729,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3661,13 +3810,9 @@
         ]
       },
       "start": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3690,6 +3835,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3783,13 +3932,9 @@
     "named": true,
     "fields": {
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -3812,6 +3957,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -3920,6 +4069,10 @@
         },
         {
           "type": "closure",
+          "named": true
+        },
+        {
+          "type": "collection",
           "named": true
         },
         {
@@ -4152,13 +4305,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -4181,6 +4330,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -4258,13 +4411,9 @@
         ]
       },
       "function": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -4287,6 +4436,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -4480,13 +4633,9 @@
     "named": true,
     "fields": {
       "operand": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -4509,6 +4658,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -4683,13 +4836,9 @@
     "named": true,
     "fields": {
       "initializer": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -4712,6 +4861,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -4819,13 +4972,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -4848,6 +4997,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -4925,13 +5078,9 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -4954,6 +5103,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -5031,13 +5184,9 @@
         ]
       },
       "else_expr": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": ";",
-            "named": false
-          },
           {
             "type": "assignment",
             "named": true
@@ -5060,6 +5209,10 @@
           },
           {
             "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
             "named": true
           },
           {
@@ -5332,11 +5485,11 @@
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "for",

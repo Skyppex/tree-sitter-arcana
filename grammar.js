@@ -6,6 +6,7 @@ const PREC = {
   ASSIGNMENT: 0,
   DEFAULT: 0,
   EXPRESSION: 0,
+  BLOCK: 1,
   DECLARATION: 2,
   RANGE: 3,
   LOGICAL_OR: 4,
@@ -24,7 +25,6 @@ const PREC = {
   FIELD: 17,
   LITERAL: 18,
   IDENTIFIER: 19,
-  BLOCK: 21,
 };
 
 module.exports = grammar({
@@ -34,13 +34,16 @@ module.exports = grammar({
     source_file: ($) => repeat($._statement),
 
     _statement: ($) =>
-      choice(
-        $.comment,
-        $.struct_declaration,
-        $.enum_declaration,
-        $.union_declaration,
-        $.function_declaration,
-        $._expression,
+      seq(
+        choice(
+          $.comment,
+          $.struct_declaration,
+          $.enum_declaration,
+          $.union_declaration,
+          $.function_declaration,
+          $._expression,
+        ),
+        optional(";"),
       ),
 
     comment: ($) => choice($.line_comment, $.block_comment),
@@ -160,36 +163,34 @@ module.exports = grammar({
     _expression: ($) =>
       prec.left(
         PREC.EXPRESSION,
-        seq(
-          choice(
-            $.range,
-            $.loop,
-            $.while,
-            $.for,
-            $.block,
-            $.assignment,
-            $.compound_assignment,
-            $.binary,
-            $.variable_declaration,
-            $.if,
-            $.unary,
-            $.function_propagation,
-            $.closure,
-            $.match,
-            $.trailing_closure,
-            $.call,
-            $.member,
-            $.struct_literal,
-            $.enum_literal,
-            $.literal,
-            $.identifier,
+        choice(
+          $.range,
+          $.loop,
+          $.while,
+          $.for,
+          $.block,
+          $.assignment,
+          $.compound_assignment,
+          $.binary,
+          $.variable_declaration,
+          $.if,
+          $.unary,
+          $.function_propagation,
+          $.closure,
+          $.match,
+          $.trailing_closure,
+          $.call,
+          $.member,
+          $.struct_literal,
+          $.enum_literal,
+          $.literal,
+          $.collection,
+          $.identifier,
 
-            // These exoressions have no returning value
-            $.break,
-            $.continue,
-            $.return,
-          ),
-          optional(";"),
+          // These exoressions have no returning value
+          $.break,
+          $.continue,
+          $.return,
         ),
       ),
 
@@ -382,14 +383,12 @@ module.exports = grammar({
       ),
 
     match_arms: ($) =>
+      prec.left(PREC.MATCH, commaSepTrailing1(seq("|", $.match_arm))),
+
+    match_arm: ($) =>
       prec.left(
-        PREC.DEFAULT,
-        seq(
-          "|",
-          field("pattern", $.pattern),
-          "=>",
-          field("body", $._expression),
-        ),
+        PREC.MATCH,
+        seq(field("pattern", $.pattern), "=>", field("body", $._expression)),
       ),
 
     pattern: ($) =>
@@ -470,6 +469,11 @@ module.exports = grammar({
 
     string: ($) =>
       seq('"', repeat(choice($.string_content, $.escape_sequence)), '"'),
+
+    collection: ($) =>
+      prec.left(PREC.LITERAL, seq("[", optional($.collection_elements), "]")),
+
+    collection_elements: ($) => commaSepTrailing1($._expression),
 
     fields: ($) => commaSepTrailing1($.field),
 
