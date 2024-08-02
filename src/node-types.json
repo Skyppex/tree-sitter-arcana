@@ -732,6 +732,10 @@
           "named": true
         },
         {
+          "type": "mod",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
@@ -757,6 +761,10 @@
         },
         {
           "type": "union_declaration",
+          "named": true
+        },
+        {
+          "type": "use",
           "named": true
         },
         {
@@ -1549,6 +1557,84 @@
     }
   },
   {
+    "type": "constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constructor_fields",
+          "named": true
+        },
+        {
+          "type": "type_annotation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "constructor_field",
+    "named": true,
+    "fields": {
+      "field_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "field_pattern": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "pattern",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "constructor_fields",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "constructor_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "continue",
     "named": true,
     "fields": {}
@@ -1907,6 +1993,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2619,6 +2715,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3490,6 +3596,10 @@
       "required": true,
       "types": [
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "match_arm",
           "named": true
         }
@@ -3619,6 +3729,44 @@
     }
   },
   {
+    "type": "mod",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        },
+        {
+          "type": "mod_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "mod_path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "mod_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parameter",
     "named": true,
     "fields": {},
@@ -3666,6 +3814,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "constructor",
           "named": true
         },
         {
@@ -4132,6 +4284,10 @@
           "named": true
         },
         {
+          "type": "mod",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
@@ -4157,6 +4313,10 @@
         },
         {
           "type": "union_declaration",
+          "named": true
+        },
+        {
+          "type": "use",
           "named": true
         },
         {
@@ -4213,6 +4373,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -4248,6 +4418,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        },
         {
           "type": "comment",
           "named": true
@@ -4786,6 +4960,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -4830,6 +5014,59 @@
     "type": "unit",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "use",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "use_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "use_group",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "use_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "use_path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "use_group",
+          "named": true
+        },
+        {
+          "type": "use_path",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "variable_declaration",
@@ -5452,6 +5689,10 @@
     "named": false
   },
   {
+    "type": "access_modifier",
+    "named": true
+  },
+  {
     "type": "bool",
     "named": false
   },
@@ -5485,11 +5726,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "for",
@@ -5509,11 +5750,11 @@
   },
   {
     "type": "int",
-    "named": false
+    "named": true
   },
   {
     "type": "int",
-    "named": true
+    "named": false
   },
   {
     "type": "let",
@@ -5525,6 +5766,10 @@
   },
   {
     "type": "match",
+    "named": false
+  },
+  {
+    "type": "mod",
     "named": false
   },
   {
@@ -5561,6 +5806,10 @@
   },
   {
     "type": "unit",
+    "named": false
+  },
+  {
+    "type": "use",
     "named": false
   },
   {

@@ -30,12 +30,19 @@ const PREC = {
 module.exports = grammar({
   name: "arcana",
 
+  conflicts: ($) => [
+    [$.unit, $.type_annotation],
+    [$.pattern, $.type_annotation],
+  ],
+
   rules: {
     source_file: ($) => repeat($._statement),
 
     _statement: ($) =>
       seq(
         choice(
+          $.mod,
+          $.use,
           $.comment,
           $.struct_declaration,
           $.enum_declaration,
@@ -50,8 +57,22 @@ module.exports = grammar({
     line_comment: (_) => seq("//", /[^\n\r]*/),
     block_comment: (_) => seq("/-", /[^-]*-+([^/-][^-]*-+)*/, "/"),
 
+    access_modifier: (_) => "pub",
+
+    mod: ($) => seq(optional($.access_modifier), "mod", $.mod_path, ";"),
+
+    mod_path: ($) => seq($.identifier, optional(seq("::", $.mod_path))),
+
+    use: ($) => seq("use", $.use_path, ";"),
+
+    use_path: ($) =>
+      seq($.identifier, optional(seq("::", choice($.use_path, $.use_group)))),
+
+    use_group: ($) => seq("{", commaSepTrailing1($.use_path), "}"),
+
     struct_declaration: ($) =>
       seq(
+        optional($.access_modifier),
         "struct",
         field("name", $.identifier),
         "{",
@@ -68,6 +89,7 @@ module.exports = grammar({
     struct_field: ($) =>
       seq(
         comments($),
+        optional($.access_modifier),
         field("field_name", $.identifier),
         field("field_type", afterColon($.type_annotation)),
       ),
@@ -76,6 +98,7 @@ module.exports = grammar({
       prec.left(
         PREC.DEFAULT,
         seq(
+          optional($.access_modifier),
           "enum",
           field("name", $.identifier),
           "{",
@@ -99,6 +122,7 @@ module.exports = grammar({
 
     union_declaration: ($) =>
       seq(
+        optional($.access_modifier),
         "union",
         field("name", $.identifier),
         "{",
@@ -116,6 +140,7 @@ module.exports = grammar({
 
     function_declaration: ($) =>
       seq(
+        optional($.access_modifier),
         "fun",
         field("name", $.identifier),
         "(",
@@ -383,7 +408,10 @@ module.exports = grammar({
       ),
 
     match_arms: ($) =>
-      prec.left(PREC.MATCH, commaSepTrailing1(seq("|", $.match_arm))),
+      prec.left(
+        PREC.MATCH,
+        seq(commaSepTrailing1(seq("|", $.match_arm)), optional(comments($))),
+      ),
 
     match_arm: ($) =>
       prec.left(
@@ -404,10 +432,38 @@ module.exports = grammar({
           $.char,
           $.string,
           $.identifier,
+          $.constructor,
         ),
       ),
 
     wildcard: (_) => "_",
+
+    constructor: ($) =>
+      prec.left(
+        PREC.MATCH,
+        seq($.type_annotation, optional($.constructor_fields)),
+      ),
+
+    constructor_fields: ($) =>
+      prec.left(
+        PREC.MATCH,
+        seq("{", commaSepTrailing($.constructor_field), "}"),
+      ),
+
+    constructor_field: ($) =>
+      prec.left(
+        PREC.MATCH,
+        seq(
+          optional(comments($)),
+          choice(
+            field("field_pattern", $.identifier),
+            seq(
+              field("field_name", $.identifier),
+              field("field_pattern", afterColon($.pattern)),
+            ),
+          ),
+        ),
+      ),
 
     call: ($) =>
       prec.left(
