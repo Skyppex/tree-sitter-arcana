@@ -83,7 +83,7 @@ module.exports = grammar({
     struct_fields: ($) =>
       prec.left(
         PREC.DEFAULT,
-        seq(commaSepTrailing1($.struct_field), comments($)),
+        seq(field("fields", commaSepTrailing1($.struct_field), comments($))),
       ),
 
     struct_field: ($) =>
@@ -155,33 +155,34 @@ module.exports = grammar({
 
     parameters: ($) => commaSepTrailing1($.parameter),
 
-    parameter: ($) => seq($.identifier, afterColon($.type_annotation)),
+    parameter: ($) =>
+      seq(
+        field("param_name", $.identifier),
+        field("param_type", afterColon($.type_annotation)),
+      ),
 
     type_annotation: ($) =>
-      field(
-        "type",
-        choice(
-          "void",
-          "unit",
-          "bool",
-          "int",
-          "float",
-          "char",
-          "string",
-          seq("[", field("array_type", $.type_annotation), "]"),
-          seq(
-            field("enum_name", $.identifier),
-            "::",
-            field("enum_variant", $.identifier),
-          ),
-          $.identifier,
-          seq(
-            "fun",
-            "(",
-            commaSepTrailing($.type_annotation),
-            ")",
-            optional(afterColon($.type_annotation)),
-          ),
+      choice(
+        "void",
+        "unit",
+        "bool",
+        "int",
+        "float",
+        "char",
+        "string",
+        seq("[", field("array_type", $.type_annotation), "]"),
+        seq(
+          field("enum_name", $.identifier),
+          "::",
+          field("enum_variant", $.identifier),
+        ),
+        $.identifier,
+        seq(
+          "fun",
+          "(",
+          commaSepTrailing("param_types", $.type_annotation),
+          ")",
+          optional(afterColon(field("return_type", $.type_annotation))),
         ),
       ),
 
@@ -368,6 +369,9 @@ module.exports = grammar({
         seq(
           field("function", $._expression),
           "->",
+          optional(seq("|", field("params", $.closure_parameters), "|")),
+          optional(field("return_type", afterColon($.type_annotation))),
+          optional("=>"),
           field("body", $._expression),
         ),
       ),
@@ -389,7 +393,7 @@ module.exports = grammar({
           "|",
           optional(field("params", $.closure_parameters)),
           "|",
-          optional(afterColon($.type_annotation)),
+          optional(field("return_type", afterColon($.type_annotation))),
           optional("=>"),
           field("body", $._expression),
         ),
@@ -399,7 +403,10 @@ module.exports = grammar({
       prec.left(PREC.CLOSURE, commaSepTrailing1($.closure_parameter)),
 
     closure_parameter: ($) =>
-      seq($.identifier, optional(afterColon($.type_annotation))),
+      seq(
+        field("param_name", $.identifier),
+        optional(field("param_type", afterColon($.type_annotation))),
+      ),
 
     match: ($) =>
       prec.left(
@@ -441,13 +448,16 @@ module.exports = grammar({
     constructor: ($) =>
       prec.left(
         PREC.MATCH,
-        seq($.type_annotation, optional($.constructor_fields)),
+        seq(
+          field("type", $.type_annotation),
+          optional(field("fields", $.constructor_fields)),
+        ),
       ),
 
     constructor_fields: ($) =>
       prec.left(
         PREC.MATCH,
-        seq("{", commaSepTrailing($.constructor_field), "}"),
+        seq("{", commaSepTrailing("fields", $.constructor_field), "}"),
       ),
 
     constructor_field: ($) =>
@@ -520,7 +530,7 @@ module.exports = grammar({
     bool: (_) => choice("true", "false"),
     int: (_) => token(/\d+d?/),
     uint: (_) => token(/\d+u/),
-    float: (_) => token(/\d+\.\d+f?/),
+    float: (_) => choice(token(/\d+f/), token(/\d*\.\d+f?/)),
     char: (_) => choice(token(/'.'/), token(/'\\.'/)),
 
     string: ($) =>
@@ -587,16 +597,8 @@ function afterColon(rule) {
   return seq(":", rule);
 }
 
-function commaSep(rule) {
-  return optional(commaSep1(rule));
-}
-
-function commaSepTrailing(rule) {
-  return optional(commaSepTrailing1(rule));
-}
-
-function commaSep1(rule) {
-  return seq(rule, repeat(seq(",", rule)));
+function commaSepTrailing(field_name, rule) {
+  return optional(field(field_name, commaSepTrailing1(rule)));
 }
 
 function commaSepTrailing1(rule) {
