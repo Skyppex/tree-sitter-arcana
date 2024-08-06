@@ -2000,12 +2000,12 @@
     "type": "enum_declaration",
     "named": true,
     "fields": {
-      "name": {
+      "identifier": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -2065,6 +2065,20 @@
             "named": true
           }
         ]
+      },
+      "generic_types": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -2087,7 +2101,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -2713,12 +2727,12 @@
           }
         ]
       },
-      "name": {
+      "identifier": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "function_type_identifier",
             "named": true
           }
         ]
@@ -2975,6 +2989,57 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "function_type_identifier",
+    "named": true,
+    "fields": {
+      "generics": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "generic_type_parameters",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function_type_identifier_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "function_type_identifier_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "generic_identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "generic_type_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "generic_identifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -4406,12 +4471,12 @@
           }
         ]
       },
-      "name": {
+      "identifier": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -4502,6 +4567,20 @@
         "types": [
           {
             "type": "fields",
+            "named": true
+          }
+        ]
+      },
+      "generic_types": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "type_annotation",
             "named": true
           }
         ]
@@ -4779,7 +4858,7 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -4789,7 +4868,7 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -4829,6 +4908,37 @@
         }
       ]
     }
+  },
+  {
+    "type": "type_identifier",
+    "named": true,
+    "fields": {
+      "generics": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "generic_type_parameters",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "type_identifier_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "unary",
