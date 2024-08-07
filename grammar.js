@@ -47,6 +47,7 @@ module.exports = grammar({
           $.struct_declaration,
           $.enum_declaration,
           $.union_declaration,
+          $.type_alias_declaration,
           $.function_declaration,
           $._expression,
         ),
@@ -73,7 +74,7 @@ module.exports = grammar({
     use_path: ($) =>
       seq($.identifier, optional(seq("::", choice($.use_path, $.use_group)))),
 
-    use_group: ($) => seq("{", commaSepTrailing1($.use_path), "}"),
+    use_group: ($) => seq("{", sepTrailing1(",", $.use_path), "}"),
 
     struct_declaration: ($) =>
       seq(
@@ -88,7 +89,7 @@ module.exports = grammar({
     struct_fields: ($) =>
       prec.left(
         PREC.DEFAULT,
-        seq(field("fields", commaSepTrailing1($.struct_field), comments($))),
+        seq(field("fields", sepTrailing1(",", $.struct_field), comments($))),
       ),
 
     struct_field: ($) =>
@@ -115,7 +116,7 @@ module.exports = grammar({
     enum_variants: ($) =>
       prec.left(
         PREC.DEFAULT,
-        seq(commaSepTrailing1($.enum_variant), comments($)),
+        seq(sepTrailing1(",", $.enum_variant), comments($)),
       ),
 
     enum_variant: ($) =>
@@ -138,10 +139,31 @@ module.exports = grammar({
     union_variants: ($) =>
       prec.left(
         PREC.DEFAULT,
-        seq(commaSepTrailing1($.union_variant), comments($)),
+        seq(sepTrailing1(",", $.union_variant), comments($)),
       ),
 
     union_variant: ($) => seq(comments($), $.literal),
+
+    type_alias_declaration: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(
+          optional($.access_modifier),
+          "type",
+          field("name", $.type_identifier),
+          "=",
+          optional(field("variants", $.type_alias_variants)),
+          ";",
+        ),
+      ),
+
+    type_alias_variants: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(sepTrailing1("|", $.type_alias_variant), comments($)),
+      ),
+
+    type_alias_variant: ($) => seq(comments($), $.type_annotation),
 
     function_declaration: ($) =>
       seq(
@@ -177,10 +199,10 @@ module.exports = grammar({
     generic_type_parameters: ($) =>
       prec(
         PREC.DEFAULT,
-        seq("<", commaSepTrailing1($.generic_identifier), ">"),
+        seq("<", sepTrailing1(",", $.generic_identifier), ">"),
       ),
 
-    parameters: ($) => commaSepTrailing1($.parameter),
+    parameters: ($) => sepTrailing1(",", $.parameter),
 
     parameter: ($) =>
       seq(
@@ -207,7 +229,7 @@ module.exports = grammar({
         seq(
           "fun",
           "(",
-          commaSepTrailing("param_types", $.type_annotation),
+          sepTrailing(",", "param_types", $.type_annotation),
           ")",
           optional(afterColon(field("return_type", $.type_annotation))),
         ),
@@ -425,7 +447,7 @@ module.exports = grammar({
       ),
 
     closure_parameters: ($) =>
-      prec.left(PREC.CLOSURE, commaSepTrailing1($.closure_parameter)),
+      prec.left(PREC.CLOSURE, sepTrailing1(",", $.closure_parameter)),
 
     closure_parameter: ($) =>
       seq(
@@ -442,7 +464,7 @@ module.exports = grammar({
     match_arms: ($) =>
       prec.left(
         PREC.MATCH,
-        seq(commaSepTrailing1(seq("|", $.match_arm)), optional(comments($))),
+        seq(sepTrailing1(",", seq("|", $.match_arm)), optional(comments($))),
       ),
 
     match_arm: ($) =>
@@ -482,7 +504,7 @@ module.exports = grammar({
     constructor_fields: ($) =>
       prec.left(
         PREC.MATCH,
-        seq("{", commaSepTrailing("fields", $.constructor_field), "}"),
+        seq("{", sepTrailing(",", "fields", $.constructor_field), "}"),
       ),
 
     constructor_field: ($) =>
@@ -511,7 +533,7 @@ module.exports = grammar({
         ),
       ),
 
-    arguments: ($) => commaSepTrailing1($.argument),
+    arguments: ($) => sepTrailing1(",", $.argument),
 
     argument: ($) => $._expression,
 
@@ -530,7 +552,7 @@ module.exports = grammar({
             seq(
               "::",
               "<",
-              field("generic_types", commaSepTrailing1($.type_annotation)),
+              field("generic_types", sepTrailing1(",", $.type_annotation)),
               ">",
             ),
           ),
@@ -549,7 +571,7 @@ module.exports = grammar({
             seq(
               "::",
               "<",
-              field("generic_types", commaSepTrailing1($.type_annotation)),
+              field("generic_types", sepTrailing1(",", $.type_annotation)),
               ">",
             ),
           ),
@@ -580,9 +602,9 @@ module.exports = grammar({
     collection: ($) =>
       prec.left(PREC.LITERAL, seq("[", optional($.collection_elements), "]")),
 
-    collection_elements: ($) => commaSepTrailing1($._expression),
+    collection_elements: ($) => sepTrailing1(",", $._expression),
 
-    fields: ($) => commaSepTrailing1($.field),
+    fields: ($) => sepTrailing1(",", $.field),
 
     field: ($) =>
       seq(
@@ -638,10 +660,10 @@ function afterColon(rule) {
   return seq(":", rule);
 }
 
-function commaSepTrailing(field_name, rule) {
-  return optional(field(field_name, commaSepTrailing1(rule)));
+function sepTrailing1(separator, rule) {
+  return seq(rule, repeat(seq(separator, rule)), optional(separator));
 }
 
-function commaSepTrailing1(rule) {
-  return seq(rule, repeat(seq(",", rule)), optional(","));
+function sepTrailing(separator, field_name, rule) {
+  return optional(field(field_name, sepTrailing1(separator, rule)));
 }

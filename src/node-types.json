@@ -756,6 +756,10 @@
           "named": true
         },
         {
+          "type": "type_alias_declaration",
+          "named": true
+        },
+        {
           "type": "unary",
           "named": true
         },
@@ -4416,6 +4420,10 @@
           "named": true
         },
         {
+          "type": "type_alias_declaration",
+          "named": true
+        },
+        {
           "type": "unary",
           "named": true
         },
@@ -4837,6 +4845,80 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "type_alias_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "variants": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_alias_variants",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_alias_variant",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "type_annotation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_alias_variants",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "type_alias_variant",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -5928,6 +6010,10 @@
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "type",
     "named": false
   },
   {
