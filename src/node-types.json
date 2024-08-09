@@ -5993,6 +5993,10 @@
     "named": false
   },
   {
+    "type": "or",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },

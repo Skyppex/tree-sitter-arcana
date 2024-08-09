@@ -160,7 +160,7 @@ module.exports = grammar({
     type_alias_variants: ($) =>
       prec.left(
         PREC.DEFAULT,
-        seq(sepTrailing1("|", $.type_alias_variant), comments($)),
+        seq(sepTrailing1("or", $.type_alias_variant), comments($)),
       ),
 
     type_alias_variant: ($) => seq(comments($), $.type_annotation),

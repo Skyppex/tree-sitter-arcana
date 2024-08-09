@@ -880,7 +880,7 @@
                   "members": [
                     {
                       "type": "STRING",
-                      "value": "|"
+                      "value": "or"
                     },
                     {
                       "type": "SYMBOL",
@@ -894,7 +894,7 @@
                 "members": [
                   {
                     "type": "STRING",
-                    "value": "|"
+                    "value": "or"
                   },
                   {
                     "type": "BLANK"
