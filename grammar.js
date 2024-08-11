@@ -57,7 +57,7 @@ module.exports = grammar({
     comment: ($) => choice($.line_comment, $.block_comment),
     line_comment: (_) => seq("//", /[^\n\r]*/),
     block_comment: (_) => seq("/-", /[^-]*-+([^/-][^-]*-+)*/, "/"),
-    identifier: (_) => prec(PREC.IDENTIFIER, /[_a-zA-Z]\w*/),
+    identifier: (_) => prec(PREC.IDENTIFIER, /[_a-z][_a-z\d]*/),
     type_identifier_name: (_) => prec(PREC.IDENTIFIER, /[A-Z]\w*/),
     generic_identifier: (_) => prec(PREC.IDENTIFIER, /T\w*/),
     function_type_identifier_name: (_) =>
@@ -464,7 +464,11 @@ module.exports = grammar({
     match_arms: ($) =>
       prec.left(
         PREC.MATCH,
-        seq(sepTrailing1(",", seq("|", $.match_arm)), optional(comments($))),
+        seq(
+          optional(seq($.match_arm, ",")),
+          sepTrailing1(",", seq("|", $.match_arm)),
+          optional(comments($)),
+        ),
       ),
 
     match_arm: ($) =>
@@ -547,7 +551,7 @@ module.exports = grammar({
       prec(
         PREC.LITERAL,
         seq(
-          field("struct_name", $.identifier),
+          field("struct_name", $.type_identifier_name),
           optional(
             seq(
               "::",
@@ -563,23 +567,21 @@ module.exports = grammar({
       ),
 
     enum_literal: ($) =>
-      prec(
+      prec.left(
         PREC.LITERAL,
         seq(
-          field("enum_name", $.identifier),
+          field("enum_name", $.type_identifier_name),
+          "::",
           optional(
             seq(
-              "::",
               "<",
               field("generic_types", sepTrailing1(",", $.type_annotation)),
               ">",
+              "::",
             ),
           ),
-          "::",
           field("enum_variant", $.identifier),
-          "{",
-          optional(field("fields", $.fields)),
-          "}",
+          optional(seq("{", field("fields", $.fields), "}")),
         ),
       ),
 

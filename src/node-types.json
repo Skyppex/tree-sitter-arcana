@@ -2045,7 +2045,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -4598,7 +4598,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
