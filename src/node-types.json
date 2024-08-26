@@ -2014,12 +2014,12 @@
           }
         ]
       },
-      "variants": {
+      "members": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "enum_variants",
+            "type": "enum_members",
             "named": true
           }
         ]
@@ -2040,6 +2040,20 @@
     "type": "enum_literal",
     "named": true,
     "fields": {
+      "concrete_types": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
+      },
       "enum_name": {
         "multiple": false,
         "required": true,
@@ -2055,7 +2069,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -2069,13 +2083,71 @@
             "named": true
           }
         ]
-      },
-      "generic_types": {
-        "multiple": true,
-        "required": false,
+      }
+    }
+  },
+  {
+    "type": "enum_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "enum_shared_field",
+          "named": true
+        },
+        {
+          "type": "enum_variant",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_members",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "enum_member",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_shared_field",
+    "named": true,
+    "fields": {
+      "field_name": {
+        "multiple": false,
+        "required": true,
         "types": [
           {
-            "type": ",",
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "field_type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
             "named": false
           },
           {
@@ -2084,6 +2156,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2110,35 +2192,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "enum_variants",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "enum_variant",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -4548,38 +4601,27 @@
   {
     "type": "struct_fields",
     "named": true,
-    "fields": {
-      "fields": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "struct_field",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "struct_field",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "struct_literal",
     "named": true,
     "fields": {
-      "fields": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "fields",
-            "named": true
-          }
-        ]
-      },
-      "generic_types": {
+      "concrete_types": {
         "multiple": true,
         "required": false,
         "types": [
@@ -4589,6 +4631,16 @@
           },
           {
             "type": "type_annotation",
+            "named": true
+          }
+        ]
+      },
+      "fields": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "fields",
             "named": true
           }
         ]
@@ -4978,14 +5030,28 @@
             "named": true
           }
         ]
+      },
+      "type_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "type_annotation",
           "named": true
         }
       ]
@@ -5165,14 +5231,14 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
       },
       "variants": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "union_variants",
@@ -5966,11 +6032,11 @@
   },
   {
     "type": "int",
-    "named": false
+    "named": true
   },
   {
     "type": "int",
-    "named": true
+    "named": false
   },
   {
     "type": "let",

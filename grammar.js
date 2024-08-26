@@ -77,19 +77,23 @@ module.exports = grammar({
     use_group: ($) => seq("{", sepTrailing1(",", $.use_path), "}"),
 
     struct_declaration: ($) =>
-      seq(
-        optional($.access_modifier),
-        "struct",
-        field("identifier", $.type_identifier),
-        "{",
-        optional(field("fields", $.struct_fields)),
-        "}",
+      prec.right(
+        PREC.DEFAULT,
+        seq(
+          optional($.access_modifier),
+          "struct",
+          field("identifier", $.type_identifier),
+          choice(
+            seq("{", optional(field("fields", $.struct_fields)), "}"),
+            ";",
+          ),
+        ),
       ),
 
     struct_fields: ($) =>
       prec.left(
-        PREC.DEFAULT,
-        seq(field("fields", sepTrailing1(",", $.struct_field), comments($))),
+        PREC.FIELD,
+        seq(sepTrailing1(",", $.struct_field), comments($)),
       ),
 
     struct_field: ($) =>
@@ -101,27 +105,37 @@ module.exports = grammar({
       ),
 
     enum_declaration: ($) =>
-      prec.left(
+      prec.right(
         PREC.DEFAULT,
         seq(
           optional($.access_modifier),
           "enum",
           field("identifier", $.type_identifier),
-          "{",
-          optional(field("variants", $.enum_variants)),
-          "}",
+          choice(
+            seq("{", optional(field("members", $.enum_members)), "}"),
+            ";",
+          ),
         ),
       ),
 
-    enum_variants: ($) =>
+    enum_members: ($) =>
       prec.left(
-        PREC.DEFAULT,
-        seq(sepTrailing1(",", $.enum_variant), comments($)),
+        PREC.FIELD,
+        seq(sepTrailing1(",", choice($.enum_member)), comments($)),
+      ),
+
+    enum_member: ($) =>
+      seq(comments($), choice($.enum_shared_field, $.enum_variant)),
+
+    enum_shared_field: ($) =>
+      seq(
+        optional($.access_modifier),
+        field("field_name", $.identifier),
+        field("field_type", afterColon($.type_annotation)),
       ),
 
     enum_variant: ($) =>
       seq(
-        comments($),
         field("variant_name", $.type_identifier_name),
         optional(seq("{", field("fields", $.struct_fields), "}")),
       ),
@@ -130,10 +144,8 @@ module.exports = grammar({
       seq(
         optional($.access_modifier),
         "union",
-        field("name", $.identifier),
-        "{",
-        optional(field("variants", $.union_variants)),
-        "}",
+        field("name", $.type_identifier_name),
+        choice(seq("{", field("variants", $.union_variants), "}"), ";"),
       ),
 
     union_variants: ($) =>
@@ -151,9 +163,10 @@ module.exports = grammar({
           optional($.access_modifier),
           "type",
           field("name", $.type_identifier),
-          "=",
-          optional(field("variants", $.type_alias_variants)),
-          ";",
+          choice(
+            seq("=", optional(field("variants", $.type_alias_variants)), ";"),
+            ";",
+          ),
         ),
       ),
 
@@ -226,6 +239,10 @@ module.exports = grammar({
           field("enum_variant", $.type_identifier_name),
         ),
         $.identifier,
+        seq(
+          field("type_name", $.type_identifier_name),
+          optional(seq("<", sepTrailing1(",", $.type_annotation), ">")),
+        ),
         seq(
           "fun",
           "(",
@@ -467,7 +484,7 @@ module.exports = grammar({
         seq(
           optional(seq($.match_arm, ",")),
           sepTrailing1(",", seq("|", $.match_arm)),
-          optional(comments($)),
+          comments($),
         ),
       ),
 
@@ -548,7 +565,7 @@ module.exports = grammar({
       ),
 
     struct_literal: ($) =>
-      prec(
+      prec.right(
         PREC.LITERAL,
         seq(
           field("struct_name", $.type_identifier_name),
@@ -556,31 +573,30 @@ module.exports = grammar({
             seq(
               "::",
               "<",
-              field("generic_types", sepTrailing1(",", $.type_annotation)),
+              field("concrete_types", sepTrailing1(",", $.type_annotation)),
               ">",
             ),
           ),
-          "{",
-          optional(field("fields", $.fields)),
-          "}",
+          optional(seq("{", field("fields", $.fields), "}")),
         ),
       ),
 
     enum_literal: ($) =>
-      prec.left(
+      prec.right(
         PREC.LITERAL,
         seq(
           field("enum_name", $.type_identifier_name),
-          "::",
-          optional(
+          choice(
             seq(
+              "::",
               "<",
-              field("generic_types", sepTrailing1(",", $.type_annotation)),
+              field("concrete_types", sepTrailing1(",", $.type_annotation)),
               ">",
               "::",
+              field("enum_variant", $.type_identifier_name),
             ),
+            seq("::", field("enum_variant", $.type_identifier_name)),
           ),
-          field("enum_variant", $.identifier),
           optional(seq("{", field("fields", $.fields), "}")),
         ),
       ),
