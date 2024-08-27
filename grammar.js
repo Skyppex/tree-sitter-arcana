@@ -47,7 +47,9 @@ module.exports = grammar({
           $.struct_declaration,
           $.enum_declaration,
           $.union_declaration,
+          $.protocol_declaration,
           $.type_alias_declaration,
+          $.implementation_declaration,
           $.function_declaration,
           $._expression,
         ),
@@ -72,7 +74,10 @@ module.exports = grammar({
     use: ($) => seq("use", $.use_path, ";"),
 
     use_path: ($) =>
-      seq($.identifier, optional(seq("::", choice($.use_path, $.use_group)))),
+      seq(
+        choice($.type_identifier_name, $.identifier),
+        optional(seq("::", choice($.use_path, $.use_group))),
+      ),
 
     use_group: ($) => seq("{", sepTrailing1(",", $.use_path), "}"),
 
@@ -145,6 +150,7 @@ module.exports = grammar({
         optional($.access_modifier),
         "union",
         field("name", $.type_identifier_name),
+        optional(field("where_clauses", $.where_clauses)),
         choice(seq("{", field("variants", $.union_variants), "}"), ";"),
       ),
 
@@ -155,6 +161,30 @@ module.exports = grammar({
       ),
 
     union_variant: ($) => seq(comments($), $.literal),
+
+    protocol_declaration: ($) =>
+      seq(
+        optional($.access_modifier),
+        "proto",
+        field("name", $.type_identifier),
+        choice(
+          seq(
+            "{",
+            repeat(choice($.associated_type, $.function_declaration)),
+            "}",
+          ),
+          ";",
+        ),
+      ),
+
+    associated_type: ($) =>
+      seq(
+        comments($),
+        "type",
+        field("name", $.type_identifier),
+        optional(seq("=", $.type_annotation)),
+        ";",
+      ),
 
     type_alias_declaration: ($) =>
       prec.left(
@@ -178,6 +208,26 @@ module.exports = grammar({
 
     type_alias_variant: ($) => seq(comments($), $.type_annotation),
 
+    implementation_declaration: ($) =>
+      prec.right(
+        PREC.DEFAULT,
+        seq(
+          "imp",
+          optional($.generic_type_parameters),
+          field("protocol_name", $.type_identifier_without_where_clauses),
+          "for",
+          field("type_name", $.type_identifier),
+          choice(
+            seq(
+              "{",
+              repeat(choice($.associated_type, $.function_declaration)),
+              "}",
+            ),
+            ";",
+          ),
+        ),
+      ),
+
     function_declaration: ($) =>
       seq(
         optional($.access_modifier),
@@ -187,11 +237,21 @@ module.exports = grammar({
         optional(field("params", $.parameters)),
         ")",
         optional(field("return_type", afterColon($.type_annotation))),
-        "=>",
-        field("body", $._expression),
+        optional(field("where_clauses", $.where_clauses)),
+        choice(seq("=>", field("body", $._expression)), ";"),
       ),
 
     type_identifier: ($) =>
+      prec(
+        PREC.IDENTIFIER,
+        seq(
+          field("name", $.type_identifier_name),
+          optional(field("generics", $.generic_type_parameters)),
+          optional(field("where_clauses", $.where_clauses)),
+        ),
+      ),
+
+    type_identifier_without_where_clauses: ($) =>
       prec(
         PREC.IDENTIFIER,
         seq(
@@ -223,6 +283,15 @@ module.exports = grammar({
         field("param_type", afterColon($.type_annotation)),
       ),
 
+    where_clauses: ($) => seq("where", sepTrailing1(",", $.where_clause)),
+
+    where_clause: ($) =>
+      seq(
+        field("type_name", $.generic_identifier),
+        ":",
+        sep1("and", field("protocol_name", $.type_annotation)),
+      ),
+
     type_annotation: ($) =>
       choice(
         "void",
@@ -241,7 +310,14 @@ module.exports = grammar({
         $.identifier,
         seq(
           field("type_name", $.type_identifier_name),
-          optional(seq("<", sepTrailing1(",", $.type_annotation), ">")),
+          optional(
+            seq(
+              "<",
+              sepTrailing1(",", $.type_annotation),
+              optional(seq("=", $.type_annotation)),
+              ">",
+            ),
+          ),
         ),
         seq(
           "fun",
@@ -684,4 +760,8 @@ function sepTrailing1(separator, rule) {
 
 function sepTrailing(separator, field_name, rule) {
   return optional(field(field_name, sepTrailing1(separator, rule)));
+}
+
+function sep1(separator, rule) {
+  return seq(rule, repeat(seq(separator, rule)));
 }
