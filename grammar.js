@@ -214,7 +214,10 @@ module.exports = grammar({
         seq(
           "imp",
           optional($.generic_type_parameters),
-          field("protocol_name", $.type_identifier_without_where_clauses),
+          field(
+            "protocol_name",
+            alias($.type_identifier_without_where_clauses, $.type_identifier),
+          ),
           "for",
           field("type_name", $.type_identifier),
           choice(
@@ -272,22 +275,41 @@ module.exports = grammar({
     generic_type_parameters: ($) =>
       prec(
         PREC.DEFAULT,
-        seq("<", sepTrailing1(",", $.generic_identifier), ">"),
+        seq(
+          "<",
+          sepTrailing1(
+            ",",
+            choice(
+              $.generic_identifier,
+              seq("[", optional(".."), $.generic_identifier, "]"),
+            ),
+          ),
+          ">",
+        ),
       ),
 
     parameters: ($) => sepTrailing1(",", $.parameter),
 
     parameter: ($) =>
-      seq(
-        field("param_name", $.identifier),
-        field("param_type", afterColon($.type_annotation)),
+      choice(
+        seq(
+          field("param_name", $.identifier),
+          field("param_type", afterColon($.type_annotation)),
+        ),
+        seq(
+          field("param_name", $.identifier),
+          field(
+            "param_spread_type",
+            afterColon(seq("..", "[", $.type_annotation, "]")),
+          ),
+        ),
       ),
 
     where_clauses: ($) => seq("where", sepTrailing1(",", $.where_clause)),
 
     where_clause: ($) =>
       seq(
-        field("type_name", $.generic_identifier),
+        choice(field("type_name", $.generic_identifier), "imp"),
         ":",
         sep1("and", field("protocol_name", $.type_annotation)),
       ),

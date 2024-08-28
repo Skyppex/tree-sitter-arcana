@@ -3388,26 +3388,12 @@
     "type": "implementation_declaration",
     "named": true,
     "fields": {
-      "functions": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "associated_type",
-            "named": true
-          },
-          {
-            "type": "function_declaration",
-            "named": true
-          }
-        ]
-      },
       "protocol_name": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "type_identifier_without_where_clauses",
+            "type": "type_identifier",
             "named": true
           }
         ]
@@ -3424,9 +3410,17 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "associated_type",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
         {
           "type": "generic_type_parameters",
           "named": true
@@ -4032,9 +4026,35 @@
           }
         ]
       },
+      "param_spread_type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "..",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
+      },
       "param_type": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": ":",
@@ -5239,32 +5259,6 @@
     "fields": {}
   },
   {
-    "type": "type_identifier_without_where_clauses",
-    "named": true,
-    "fields": {
-      "generics": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "generic_type_parameters",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "unary",
     "named": true,
     "fields": {
@@ -5696,7 +5690,7 @@
       },
       "type_name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "generic_identifier",
@@ -6271,11 +6265,11 @@
   },
   {
     "type": "int",
-    "named": true
+    "named": false
   },
   {
     "type": "int",
-    "named": false
+    "named": true
   },
   {
     "type": "let",
