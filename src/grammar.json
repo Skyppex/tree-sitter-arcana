@@ -1925,31 +1925,35 @@
       "members": [
         {
           "type": "STRING",
-          "value": "void"
+          "value": "Void"
         },
         {
           "type": "STRING",
-          "value": "unit"
+          "value": "Unit"
         },
         {
           "type": "STRING",
-          "value": "bool"
+          "value": "Bool"
         },
         {
           "type": "STRING",
-          "value": "int"
+          "value": "Int"
         },
         {
           "type": "STRING",
-          "value": "float"
+          "value": "UInt"
         },
         {
           "type": "STRING",
-          "value": "char"
+          "value": "Float"
         },
         {
           "type": "STRING",
-          "value": "string"
+          "value": "Char"
+        },
+        {
+          "type": "STRING",
+          "value": "String"
         },
         {
           "type": "SEQ",
@@ -4203,8 +4207,17 @@
             }
           },
           {
-            "type": "STRING",
-            "value": "."
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "."
+              },
+              {
+                "type": "STRING",
+                "value": "::"
+              }
+            ]
           },
           {
             "type": "FIELD",
@@ -4924,10 +4937,6 @@
     }
   ],
   "conflicts": [
-    [
-      "unit",
-      "type_annotation"
-    ],
     [
       "pattern",
       "type_annotation"

@@ -5477,11 +5477,6 @@
     }
   },
   {
-    "type": "unit",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "use",
     "named": true,
     "fields": {},
@@ -6184,6 +6179,38 @@
     "named": false
   },
   {
+    "type": "Bool",
+    "named": false
+  },
+  {
+    "type": "Char",
+    "named": false
+  },
+  {
+    "type": "Float",
+    "named": false
+  },
+  {
+    "type": "Int",
+    "named": false
+  },
+  {
+    "type": "String",
+    "named": false
+  },
+  {
+    "type": "UInt",
+    "named": false
+  },
+  {
+    "type": "Unit",
+    "named": false
+  },
+  {
+    "type": "Void",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -6208,15 +6235,7 @@
     "named": false
   },
   {
-    "type": "bool",
-    "named": false
-  },
-  {
     "type": "break",
-    "named": false
-  },
-  {
-    "type": "char",
     "named": false
   },
   {
@@ -6240,10 +6259,6 @@
     "named": false
   },
   {
-    "type": "float",
-    "named": false
-  },
-  {
     "type": "for",
     "named": false
   },
@@ -6261,10 +6276,6 @@
   },
   {
     "type": "in",
-    "named": false
-  },
-  {
-    "type": "int",
     "named": false
   },
   {
@@ -6304,10 +6315,6 @@
     "named": false
   },
   {
-    "type": "string",
-    "named": false
-  },
-  {
     "type": "string_content",
     "named": true
   },
@@ -6333,14 +6340,10 @@
   },
   {
     "type": "unit",
-    "named": false
+    "named": true
   },
   {
     "type": "use",
-    "named": false
-  },
-  {
-    "type": "void",
     "named": false
   },
   {

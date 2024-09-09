@@ -30,10 +30,7 @@ const PREC = {
 module.exports = grammar({
   name: "arcana",
 
-  conflicts: ($) => [
-    [$.unit, $.type_annotation],
-    [$.pattern, $.type_annotation],
-  ],
+  conflicts: ($) => [[$.pattern, $.type_annotation]],
 
   rules: {
     source_file: ($) => repeat($._statement),
@@ -316,13 +313,14 @@ module.exports = grammar({
 
     type_annotation: ($) =>
       choice(
-        "void",
-        "unit",
-        "bool",
-        "int",
-        "float",
-        "char",
-        "string",
+        "Void",
+        "Unit",
+        "Bool",
+        "Int",
+        "UInt",
+        "Float",
+        "Char",
+        "String",
         seq("[", field("array_type", $.type_annotation), "]"),
         seq(
           field("enum_name", $.type_identifier_name),
@@ -659,7 +657,11 @@ module.exports = grammar({
     member: ($) =>
       prec.left(
         PREC.FIELD,
-        seq(field("object", $._expression), ".", field("member", $.identifier)),
+        seq(
+          field("object", $._expression),
+          choice(".", "::"),
+          field("member", $.identifier),
+        ),
       ),
 
     struct_literal: ($) =>
