@@ -22,15 +22,15 @@ const PREC = {
   UNARY: 14,
   TRAILING_CLOSURE: 15,
   CALL: 16,
-  FIELD: 17,
-  LITERAL: 18,
+  LITERAL: 17,
+  FIELD: 18,
   IDENTIFIER: 19,
 };
 
 module.exports = grammar({
   name: "arcana",
 
-  conflicts: ($) => [[$.pattern, $.type_annotation]],
+  conflicts: ($) => [[$.type_annotation]],
 
   rules: {
     source_file: ($) => repeat($._statement),
@@ -66,7 +66,11 @@ module.exports = grammar({
 
     mod: ($) => seq(optional($.access_modifier), "mod", $.mod_path, ";"),
 
-    mod_path: ($) => seq($.identifier, optional(seq("::", $.mod_path))),
+    mod_path: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq($.identifier, optional(seq("::", $.mod_path))),
+      ),
 
     use: ($) => seq("use", $.use_path, ";"),
 
@@ -85,6 +89,7 @@ module.exports = grammar({
           optional($.access_modifier),
           "struct",
           field("identifier", $.type_identifier),
+          optional(field("where_clauses", $.where_clauses)),
           choice(
             seq("{", optional(field("fields", $.struct_fields)), "}"),
             ";",
@@ -113,6 +118,7 @@ module.exports = grammar({
           optional($.access_modifier),
           "enum",
           field("identifier", $.type_identifier),
+          optional(field("where_clauses", $.where_clauses)),
           choice(
             seq("{", optional(field("members", $.enum_members)), "}"),
             ";",
@@ -164,6 +170,7 @@ module.exports = grammar({
         optional($.access_modifier),
         "proto",
         field("name", $.type_identifier),
+        optional(field("where_clauses", $.where_clauses)),
         choice(
           seq(
             "{",
@@ -190,6 +197,7 @@ module.exports = grammar({
           optional($.access_modifier),
           "type",
           field("name", $.type_identifier),
+          optional(field("where_clauses", $.where_clauses)),
           choice(
             seq("=", optional(field("variants", $.type_alias_variants)), ";"),
             ";",
@@ -211,12 +219,10 @@ module.exports = grammar({
         seq(
           "imp",
           optional($.generic_type_parameters),
-          field(
-            "protocol_name",
-            alias($.type_identifier_without_where_clauses, $.type_identifier),
-          ),
+          field("protocol_name", $.type_identifier),
           "for",
           field("type_name", $.type_identifier),
+          optional(field("where_clauses", $.where_clauses)),
           choice(
             seq(
               "{",
@@ -242,17 +248,7 @@ module.exports = grammar({
       ),
 
     type_identifier: ($) =>
-      prec(
-        PREC.IDENTIFIER,
-        seq(
-          field("name", $.type_identifier_name),
-          optional(field("generics", $.generic_type_parameters)),
-          optional(field("where_clauses", $.where_clauses)),
-        ),
-      ),
-
-    type_identifier_without_where_clauses: ($) =>
-      prec(
+      prec.right(
         PREC.IDENTIFIER,
         seq(
           field("name", $.type_identifier_name),
@@ -261,7 +257,7 @@ module.exports = grammar({
       ),
 
     function_type_identifier: ($) =>
-      prec(
+      prec.right(
         PREC.IDENTIFIER,
         seq(
           field("name", $.function_type_identifier_name),
@@ -270,20 +266,10 @@ module.exports = grammar({
       ),
 
     generic_type_parameters: ($) =>
-      prec(
-        PREC.DEFAULT,
-        seq(
-          "<",
-          sepTrailing1(
-            ",",
-            choice(
-              $.generic_identifier,
-              seq("[", optional(".."), $.generic_identifier, "]"),
-            ),
-          ),
-          ">",
-        ),
-      ),
+      prec(PREC.DEFAULT, seq("<", type_parameter($.generic_identifier), ">")),
+
+    concrete_type_parameters: ($) =>
+      prec(PREC.DEFAULT, seq("<", type_parameter($.type_identifier_name), ">")),
 
     parameters: ($) => sepTrailing1(",", $.parameter),
 
@@ -312,39 +298,50 @@ module.exports = grammar({
       ),
 
     type_annotation: ($) =>
-      choice(
-        "Void",
-        "Unit",
-        "Bool",
-        "Int",
-        "UInt",
-        "Float",
-        "Char",
-        "String",
-        seq("[", field("array_type", $.type_annotation), "]"),
-        seq(
-          field("enum_name", $.type_identifier_name),
-          "::",
-          field("enum_variant", $.type_identifier_name),
-        ),
-        $.identifier,
-        seq(
-          field("type_name", $.type_identifier_name),
-          optional(
-            seq(
-              "<",
-              sepTrailing1(",", $.type_annotation),
-              optional(seq("=", $.type_annotation)),
-              ">",
+      prec.left(
+        PREC.DEFAULT,
+        choice(
+          "Void",
+          "Unit",
+          "Bool",
+          "Int",
+          "UInt",
+          "Float",
+          "Char",
+          "String",
+          seq("[", field("array_type", $.type_annotation), "]"),
+          seq(
+            "fun",
+            "(",
+            sepTrailing(",", "param_types", $.type_annotation),
+            ")",
+            optional(afterColon(field("return_type", $.type_annotation))),
+          ),
+          seq(
+            optional(seq($.mod_path, "::")),
+            choice(
+              seq(
+                field("type_name", $.type_identifier_name),
+                optional($.concrete_type_parameters),
+              ),
+              seq(
+                field("enum_name", $.type_identifier_name),
+                optional($.concrete_type_parameters),
+                "::",
+                field("enum_variant", $.type_identifier_name),
+                optional($.concrete_type_parameters),
+              ),
             ),
           ),
         ),
+      ),
+
+    function_type_annotation: ($) =>
+      prec(
+        PREC.IDENTIFIER,
         seq(
-          "fun",
-          "(",
-          sepTrailing(",", "param_types", $.type_annotation),
-          ")",
-          optional(afterColon(field("return_type", $.type_annotation))),
+          field("name", $.function_type_identifier_name),
+          optional(field("generics", seq("::", $.generic_type_parameters))),
         ),
       ),
 
@@ -369,8 +366,8 @@ module.exports = grammar({
           $.trailing_closure,
           $.call,
           $.member,
-          $.struct_literal,
-          $.enum_literal,
+          $.type_constructor,
+          $.static_member_function,
           $.literal,
           $.collection,
           $.identifier,
@@ -657,10 +654,19 @@ module.exports = grammar({
     member: ($) =>
       prec.left(
         PREC.FIELD,
+        seq(field("object", $._expression), ".", field("member", $.identifier)),
+      ),
+
+    type_constructor: ($) =>
+      prec.right(
+        PREC.LITERAL,
         seq(
-          field("object", $._expression),
-          choice(".", "::"),
-          field("member", $.identifier),
+          optional(seq(field("path", $.mod_path), "::")),
+          field("type_name", $.type_annotation),
+          optional(seq("::", field("member_type_name", $.type_annotation))),
+          "{",
+          optional(field("fields", $.fields)),
+          "}",
         ),
       ),
 
@@ -668,16 +674,11 @@ module.exports = grammar({
       prec.right(
         PREC.LITERAL,
         seq(
-          field("struct_name", $.type_identifier_name),
-          optional(
-            seq(
-              "::",
-              "<",
-              field("concrete_types", sepTrailing1(",", $.type_annotation)),
-              ">",
-            ),
-          ),
-          optional(seq("{", field("fields", $.fields), "}")),
+          optional(seq(field("path", $.mod_path), "::")),
+          field("struct_name", $.type_identifier),
+          "{",
+          optional(field("fields", $.fields)),
+          "}",
         ),
       ),
 
@@ -685,19 +686,23 @@ module.exports = grammar({
       prec.right(
         PREC.LITERAL,
         seq(
-          field("enum_name", $.type_identifier_name),
-          choice(
-            seq(
-              "::",
-              "<",
-              field("concrete_types", sepTrailing1(",", $.type_annotation)),
-              ">",
-              "::",
-              field("enum_variant", $.type_identifier_name),
-            ),
-            seq("::", field("enum_variant", $.type_identifier_name)),
-          ),
-          optional(seq("{", field("fields", $.fields), "}")),
+          optional(seq(field("path", $.mod_path), "::")),
+          field("enum_name", $.type_identifier),
+          "::",
+          field("enum_variant_name", $.type_identifier_name),
+          "{",
+          optional(field("fields", $.fields)),
+          "}",
+        ),
+      ),
+
+    static_member_function: ($) =>
+      prec.right(
+        PREC.FIELD,
+        seq(
+          field("type", $.type_identifier),
+          "::",
+          field("function", $.function_type_identifier),
         ),
       ),
 
@@ -709,8 +714,16 @@ module.exports = grammar({
 
     unit: (_) => "unit",
     bool: (_) => choice("true", "false"),
-    int: (_) => token(/\d+d?/),
-    uint: (_) => token(/\d+u/),
+
+    int: (_) =>
+      choice(
+        token(/\d+d?/),
+        seq(choice("0b", "0o", "0d", "0x"), token(/\d+d?/)),
+      ),
+
+    uint: (_) =>
+      choice(token(/\d+u/), seq(choice("0b", "0o", "0d", "0x"), token(/\d+u/))),
+
     float: (_) => choice(token(/\d+f/), token(/\d*\.\d+f?/)),
     char: (_) => choice(token(/'.'/), token(/'\\.'/)),
 
@@ -722,13 +735,18 @@ module.exports = grammar({
 
     collection_elements: ($) => sepTrailing1(",", $._expression),
 
-    fields: ($) => sepTrailing1(",", $.field),
+    fields: ($) => choice($.named_fields, $.unnamed_fields),
 
-    field: ($) =>
+    named_fields: ($) => sepTrailing1(",", $.named_field),
+
+    named_field: ($) =>
       seq(
         field("field_name", $.identifier),
         field("field_initializer", afterColon($._expression)),
       ),
+
+    unnamed_fields: ($) => sepTrailing1(",", $.unnamed_field),
+    unnamed_field: ($) => field("field_initializer", $._expression),
 
     string_content: (_) => token.immediate(prec(1, /[^"\\\n]+/)),
     escape_sequence: (_) =>
@@ -788,4 +806,11 @@ function sepTrailing(separator, field_name, rule) {
 
 function sep1(separator, rule) {
   return seq(rule, repeat(seq(separator, rule)));
+}
+
+function type_parameter(identifier_rule) {
+  return sepTrailing1(
+    ",",
+    choice(identifier_rule, seq("[", optional(".."), identifier_rule, "]")),
+  );
 }

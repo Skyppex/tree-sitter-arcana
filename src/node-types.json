@@ -44,10 +44,6 @@
           "named": true
         },
         {
-          "type": "enum_literal",
-          "named": true
-        },
-        {
           "type": "for",
           "named": true
         },
@@ -88,11 +84,15 @@
           "named": true
         },
         {
-          "type": "struct_literal",
+          "type": "static_member_function",
           "named": true
         },
         {
           "type": "trailing_closure",
+          "named": true
+        },
+        {
+          "type": "type_constructor",
           "named": true
         },
         {
@@ -170,10 +170,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -214,11 +210,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -276,10 +276,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -320,11 +316,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -418,10 +418,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -462,11 +458,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -602,10 +602,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -646,11 +642,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -722,10 +722,6 @@
           "named": true
         },
         {
-          "type": "enum_literal",
-          "named": true
-        },
-        {
           "type": "for",
           "named": true
         },
@@ -782,11 +778,11 @@
           "named": true
         },
         {
-          "type": "struct_declaration",
+          "type": "static_member_function",
           "named": true
         },
         {
-          "type": "struct_literal",
+          "type": "struct_declaration",
           "named": true
         },
         {
@@ -795,6 +791,10 @@
         },
         {
           "type": "type_alias_declaration",
+          "named": true
+        },
+        {
+          "type": "type_constructor",
           "named": true
         },
         {
@@ -875,10 +875,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -919,11 +915,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -997,10 +997,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -1041,11 +1037,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -1114,10 +1114,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -1158,11 +1154,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -1310,10 +1310,6 @@
           "named": true
         },
         {
-          "type": "enum_literal",
-          "named": true
-        },
-        {
           "type": "for",
           "named": true
         },
@@ -1354,11 +1350,15 @@
           "named": true
         },
         {
-          "type": "struct_literal",
+          "type": "static_member_function",
           "named": true
         },
         {
           "type": "trailing_closure",
+          "named": true
+        },
+        {
+          "type": "type_constructor",
           "named": true
         },
         {
@@ -1440,10 +1440,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -1484,11 +1480,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -1546,10 +1546,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -1590,11 +1586,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -1611,6 +1611,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "concrete_type_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type_identifier_name",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1753,10 +1768,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -1797,11 +1808,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -1859,10 +1874,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -1903,11 +1914,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -1971,10 +1986,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -2015,11 +2026,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -2061,6 +2076,16 @@
             "named": true
           }
         ]
+      },
+      "where_clauses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clauses",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -2072,56 +2097,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "enum_literal",
-    "named": true,
-    "fields": {
-      "concrete_types": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "type_annotation",
-            "named": true
-          }
-        ]
-      },
-      "enum_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      },
-      "enum_variant": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      },
-      "fields": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "fields",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -2233,141 +2208,19 @@
     }
   },
   {
-    "type": "field",
-    "named": true,
-    "fields": {
-      "field_initializer": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ":",
-            "named": false
-          },
-          {
-            "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "binary",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          },
-          {
-            "type": "break",
-            "named": true
-          },
-          {
-            "type": "call",
-            "named": true
-          },
-          {
-            "type": "closure",
-            "named": true
-          },
-          {
-            "type": "collection",
-            "named": true
-          },
-          {
-            "type": "compound_assignment",
-            "named": true
-          },
-          {
-            "type": "continue",
-            "named": true
-          },
-          {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
-            "type": "for",
-            "named": true
-          },
-          {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if",
-            "named": true
-          },
-          {
-            "type": "literal",
-            "named": true
-          },
-          {
-            "type": "loop",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "member",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "return",
-            "named": true
-          },
-          {
-            "type": "struct_literal",
-            "named": true
-          },
-          {
-            "type": "trailing_closure",
-            "named": true
-          },
-          {
-            "type": "unary",
-            "named": true
-          },
-          {
-            "type": "variable_declaration",
-            "named": true
-          },
-          {
-            "type": "while",
-            "named": true
-          }
-        ]
-      },
-      "field_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "fields",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "field",
+          "type": "named_fields",
+          "named": true
+        },
+        {
+          "type": "unnamed_fields",
           "named": true
         }
       ]
@@ -2423,10 +2276,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -2467,11 +2316,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -2529,10 +2382,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -2573,11 +2422,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -2645,10 +2498,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -2689,11 +2538,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -2757,10 +2610,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -2801,11 +2650,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -2923,10 +2776,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -2967,11 +2816,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3029,10 +2882,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3073,11 +2922,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3197,10 +3050,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3241,11 +3090,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3303,10 +3156,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3347,11 +3196,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3407,6 +3260,16 @@
             "named": true
           }
         ]
+      },
+      "where_clauses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clauses",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -3430,6 +3293,11 @@
   },
   {
     "type": "inclusive",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "int",
     "named": true,
     "fields": {}
   },
@@ -3522,10 +3390,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3566,11 +3430,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3634,10 +3502,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3678,11 +3542,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3756,10 +3624,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3800,11 +3664,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -3907,10 +3775,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -3951,11 +3815,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -4007,6 +3875,147 @@
         },
         {
           "type": "mod_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "named_field",
+    "named": true,
+    "fields": {
+      "field_initializer": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "assignment",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "break",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
+            "named": true
+          },
+          {
+            "type": "compound_assignment",
+            "named": true
+          },
+          {
+            "type": "continue",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "member",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "return",
+            "named": true
+          },
+          {
+            "type": "static_member_function",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
+            "named": true
+          },
+          {
+            "type": "unary",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "field_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "named_fields",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "named_field",
           "named": true
         }
       ]
@@ -4147,6 +4156,16 @@
             "named": true
           }
         ]
+      },
+      "where_clauses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clauses",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -4213,10 +4232,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -4257,11 +4272,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -4319,10 +4338,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -4363,11 +4378,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -4441,10 +4460,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -4485,11 +4500,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -4561,10 +4580,6 @@
           "named": true
         },
         {
-          "type": "enum_literal",
-          "named": true
-        },
-        {
           "type": "for",
           "named": true
         },
@@ -4621,11 +4636,11 @@
           "named": true
         },
         {
-          "type": "struct_declaration",
+          "type": "static_member_function",
           "named": true
         },
         {
-          "type": "struct_literal",
+          "type": "struct_declaration",
           "named": true
         },
         {
@@ -4634,6 +4649,10 @@
         },
         {
           "type": "type_alias_declaration",
+          "named": true
+        },
+        {
+          "type": "type_constructor",
           "named": true
         },
         {
@@ -4657,6 +4676,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "static_member_function",
+    "named": true,
+    "fields": {
+      "function": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function_type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -4698,6 +4743,16 @@
         "types": [
           {
             "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "where_clauses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clauses",
             "named": true
           }
         ]
@@ -4778,46 +4833,6 @@
     }
   },
   {
-    "type": "struct_literal",
-    "named": true,
-    "fields": {
-      "concrete_types": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "type_annotation",
-            "named": true
-          }
-        ]
-      },
-      "fields": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "fields",
-            "named": true
-          }
-        ]
-      },
-      "struct_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "trailing_closure",
     "named": true,
     "fields": {
@@ -4862,10 +4877,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -4906,11 +4917,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -4968,10 +4983,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -5012,11 +5023,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -5079,6 +5094,16 @@
         "types": [
           {
             "type": "type_alias_variants",
+            "named": true
+          }
+        ]
+      },
+      "where_clauses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clauses",
             "named": true
           }
         ]
@@ -5207,14 +5232,60 @@
       "required": false,
       "types": [
         {
-          "type": "identifier",
+          "type": "concrete_type_parameters",
           "named": true
         },
         {
-          "type": "type_annotation",
+          "type": "mod_path",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "type_constructor",
+    "named": true,
+    "fields": {
+      "fields": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "fields",
+            "named": true
+          }
+        ]
+      },
+      "member_type_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
+      },
+      "path": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "mod_path",
+            "named": true
+          }
+        ]
+      },
+      "type_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -5240,21 +5311,16 @@
             "named": true
           }
         ]
-      },
-      "where_clauses": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "where_clauses",
-            "named": true
-          }
-        ]
       }
     }
   },
   {
     "type": "type_identifier_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "uint",
     "named": true,
     "fields": {}
   },
@@ -5303,10 +5369,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -5347,11 +5409,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -5477,6 +5543,133 @@
     }
   },
   {
+    "type": "unnamed_field",
+    "named": true,
+    "fields": {
+      "field_initializer": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "assignment",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "break",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
+            "named": true
+          },
+          {
+            "type": "compound_assignment",
+            "named": true
+          },
+          {
+            "type": "continue",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "function_propagation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "member",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "return",
+            "named": true
+          },
+          {
+            "type": "static_member_function",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
+            "named": true
+          },
+          {
+            "type": "unary",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "unnamed_fields",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "unnamed_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "use",
     "named": true,
     "fields": {},
@@ -5578,10 +5771,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -5622,11 +5811,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -5755,10 +5948,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -5799,11 +5988,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -5861,10 +6054,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -5905,11 +6094,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -5967,10 +6160,6 @@
             "named": true
           },
           {
-            "type": "enum_literal",
-            "named": true
-          },
-          {
             "type": "for",
             "named": true
           },
@@ -6011,11 +6200,15 @@
             "named": true
           },
           {
-            "type": "struct_literal",
+            "type": "static_member_function",
             "named": true
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
             "named": true
           },
           {
@@ -6128,6 +6321,22 @@
   },
   {
     "type": "/=",
+    "named": false
+  },
+  {
+    "type": "0b",
+    "named": false
+  },
+  {
+    "type": "0d",
+    "named": false
+  },
+  {
+    "type": "0o",
+    "named": false
+  },
+  {
+    "type": "0x",
     "named": false
   },
   {
@@ -6279,10 +6488,6 @@
     "named": false
   },
   {
-    "type": "int",
-    "named": true
-  },
-  {
     "type": "let",
     "named": false
   },
@@ -6329,10 +6534,6 @@
   {
     "type": "type",
     "named": false
-  },
-  {
-    "type": "uint",
-    "named": true
   },
   {
     "type": "union",
