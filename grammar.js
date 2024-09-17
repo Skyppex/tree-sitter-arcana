@@ -266,10 +266,16 @@ module.exports = grammar({
       ),
 
     generic_type_parameters: ($) =>
-      prec(PREC.DEFAULT, seq("<", type_parameter($.generic_identifier), ">")),
+      prec(
+        PREC.DEFAULT,
+        seq("<", type_parameters($, $.generic_identifier), ">"),
+      ),
 
     concrete_type_parameters: ($) =>
-      prec(PREC.DEFAULT, seq("<", type_parameter($.type_identifier_name), ">")),
+      prec(
+        PREC.DEFAULT,
+        seq("<", type_parameters($, $.type_identifier_name), ">"),
+      ),
 
     parameters: ($) => sepTrailing1(",", $.parameter),
 
@@ -808,9 +814,17 @@ function sep1(separator, rule) {
   return seq(rule, repeat(seq(separator, rule)));
 }
 
-function type_parameter(identifier_rule) {
+function type_parameters($, identifier_rule) {
   return sepTrailing1(
     ",",
-    choice(identifier_rule, seq("[", optional(".."), identifier_rule, "]")),
+    choice(
+      field("type_name", identifier_rule),
+      seq(
+        field("type_name", identifier_rule),
+        "=",
+        field("associated_type_name", $.type_identifier_name),
+      ),
+      seq("[", optional(".."), identifier_rule, "]"),
+    ),
   );
 }
