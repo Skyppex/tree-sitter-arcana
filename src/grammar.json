@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "arcana",
   "rules": {
     "source_file": {
@@ -386,6 +387,22 @@
                   {
                     "type": "STRING",
                     "value": "{"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "FIELD",
+                        "name": "embedded_structs",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "embedded_structs"
+                        }
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "CHOICE",
@@ -807,12 +824,36 @@
                   "value": "{"
                 },
                 {
-                  "type": "FIELD",
-                  "name": "fields",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "struct_fields"
-                  }
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "FIELD",
+                      "name": "embedded_structs",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "embedded_structs"
+                      }
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "FIELD",
+                      "name": "fields",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "struct_fields"
+                      }
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 },
                 {
                   "type": "STRING",
@@ -826,6 +867,71 @@
           ]
         }
       ]
+    },
+    "embedded_structs": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "type_identifier_name"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "type_identifier_name"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "PREC",
+            "value": -100,
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "comment"
+                  }
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "union_declaration": {
       "type": "SEQ",

@@ -91,7 +91,12 @@ module.exports = grammar({
           field("identifier", $.type_identifier),
           optional(field("where_clauses", $.where_clauses)),
           choice(
-            seq("{", optional(field("fields", $.struct_fields)), "}"),
+            seq(
+              "{",
+              optional(field("embedded_structs", $.embedded_structs)),
+              optional(field("fields", $.struct_fields)),
+              "}",
+            ),
             ";",
           ),
         ),
@@ -145,7 +150,20 @@ module.exports = grammar({
     enum_variant: ($) =>
       seq(
         field("variant_name", $.type_identifier_name),
-        optional(seq("{", field("fields", $.struct_fields), "}")),
+        optional(
+          seq(
+            "{",
+            optional(field("embedded_structs", $.embedded_structs)),
+            optional(field("fields", $.struct_fields)),
+            "}",
+          ),
+        ),
+      ),
+
+    embedded_structs: ($) =>
+      prec.left(
+        PREC.DEFAULT,
+        seq(sepTrailing1(",", $.type_identifier_name), comments($)),
       ),
 
     union_declaration: ($) =>

@@ -25,11 +25,5 @@
     "bindings/node/*",
     "queries/*",
     "src/**"
-  ],
-  "tree-sitter": [
-    {
-      "scope": "source.arcana",
-      "injection-regex": "^arcana$"
-    }
   ]
 }

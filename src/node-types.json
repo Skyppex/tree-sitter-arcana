@@ -2075,6 +2075,25 @@
     }
   },
   {
+    "type": "embedded_structs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "type_identifier_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "enum_declaration",
     "named": true,
     "fields": {
@@ -2206,6 +2225,16 @@
     "type": "enum_variant",
     "named": true,
     "fields": {
+      "embedded_structs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "embedded_structs",
+            "named": true
+          }
+        ]
+      },
       "fields": {
         "multiple": false,
         "required": false,
@@ -4572,6 +4601,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -4769,6 +4799,16 @@
     "type": "struct_declaration",
     "named": true,
     "fields": {
+      "embedded_structs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "embedded_structs",
+            "named": true
+          }
+        ]
+      },
       "fields": {
         "multiple": false,
         "required": false,
