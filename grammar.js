@@ -262,7 +262,7 @@ module.exports = grammar({
         ")",
         optional(field("return_type", afterColon($.type_annotation))),
         optional(field("where_clauses", $.where_clauses)),
-        choice(seq("=>", field("body", $._expression)), ";"),
+        choice(fatArrowOrBlock($, "body"), ";"),
       ),
 
     type_identifier: ($) =>
@@ -334,6 +334,7 @@ module.exports = grammar({
           "Char",
           "String",
           seq("[", field("array_type", $.type_annotation), "]"),
+          seq("(", sepTrailing1(",", $.type_annotation), ")"),
           seq(
             "fun",
             "(",
@@ -393,6 +394,7 @@ module.exports = grammar({
           $.type_constructor,
           $.static_member_function,
           $.literal,
+          $.tuple,
           $.collection,
           $.identifier,
           $.break,
@@ -402,10 +404,7 @@ module.exports = grammar({
       ),
 
     loop: ($) =>
-      prec.left(
-        PREC.CONDITIONAL,
-        seq("loop", optional("=>"), field("body", $._expression)),
-      ),
+      prec.left(PREC.CONDITIONAL, seq("loop", fatArrowOrBlock($, "body"))),
 
     while: ($) =>
       prec.left(
@@ -413,11 +412,8 @@ module.exports = grammar({
         seq(
           "while",
           field("condition", $._expression),
-          "=>",
-          field("body", $._expression),
-          optional(
-            seq("else", optional("=>"), field("else_expr", $._expression)),
-          ),
+          fatArrowOrBlock($, "body"),
+          optional(seq("else", fatArrowOrBlock($, "else_expr"))),
         ),
       ),
 
@@ -429,11 +425,8 @@ module.exports = grammar({
           field("identifier", $.identifier),
           "in",
           field("iterable", $._expression),
-          "=>",
-          field("body", $._expression),
-          optional(
-            seq("else", optional("=>"), field("else_expr", $._expression)),
-          ),
+          fatArrowOrBlock($, "body"),
+          optional(seq("else", fatArrowOrBlock($, "else_expr"))),
         ),
       ),
 
@@ -510,8 +503,7 @@ module.exports = grammar({
         seq(
           "if",
           field("condition", $._expression),
-          "=>",
-          field("expr", $._expression),
+          fatArrowOrBlock($, "expr"),
           optional(repeat($.elif)),
           optional($.else),
         ),
@@ -524,16 +516,12 @@ module.exports = grammar({
           "else",
           "if",
           field("condition", $._expression),
-          "=>",
-          field("expr", $._expression),
+          fatArrowOrBlock($, "expr"),
         ),
       ),
 
     else: ($) =>
-      prec.left(
-        PREC.DEFAULT,
-        seq("else", optional("=>"), field("expr", $._expression)),
-      ),
+      prec.left(PREC.DEFAULT, seq("else", fatArrowOrBlock($, "expr"))),
 
     unary: ($) =>
       prec.right(
@@ -552,8 +540,7 @@ module.exports = grammar({
           "->",
           optional(seq("|", field("params", $.closure_parameters), "|")),
           optional(field("return_type", afterColon($.type_annotation))),
-          optional("=>"),
-          field("body", $._expression),
+          fatArrowOrBlock($, "body"),
         ),
       ),
 
@@ -575,8 +562,7 @@ module.exports = grammar({
           optional(field("params", $.closure_parameters)),
           "|",
           optional(field("return_type", afterColon($.type_annotation))),
-          optional("=>"),
-          field("body", $._expression),
+          fatArrowOrBlock($, "body"),
         ),
       ),
 
@@ -736,6 +722,8 @@ module.exports = grammar({
         choice($.unit, $.bool, $.int, $.uint, $.float, $.char, $.string),
       ),
 
+    tuple: ($) => seq("(", sepTrailing1(",", $._expression), ")"),
+
     unit: (_) => "unit",
     bool: (_) => choice("true", "false"),
 
@@ -773,6 +761,7 @@ module.exports = grammar({
     unnamed_field: ($) => field("field_initializer", $._expression),
 
     string_content: (_) => token.immediate(prec(1, /[^"\\\n]+/)),
+
     escape_sequence: (_) =>
       token(
         choice(
@@ -811,6 +800,13 @@ module.exports = grammar({
       ),
   },
 });
+
+function fatArrowOrBlock($, exprFieldName) {
+  return choice(
+    seq("=>", field(exprFieldName, $._expression)),
+    field(exprFieldName, $.block),
+  );
+}
 
 function comments($) {
   return prec(PREC.COMMENT, optional(repeat($.comment)));

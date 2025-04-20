@@ -92,6 +92,10 @@
           "named": true
         },
         {
+          "type": "tuple",
+          "named": true
+        },
+        {
           "type": "type_constructor",
           "named": true
         },
@@ -218,6 +222,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -321,6 +329,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -463,6 +475,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -650,6 +666,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -790,6 +810,10 @@
           "named": true
         },
         {
+          "type": "tuple",
+          "named": true
+        },
+        {
           "type": "type_alias_declaration",
           "named": true
         },
@@ -923,6 +947,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -1045,6 +1073,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -1159,6 +1191,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -1358,6 +1394,10 @@
           "named": true
         },
         {
+          "type": "tuple",
+          "named": true
+        },
+        {
           "type": "type_constructor",
           "named": true
         },
@@ -1488,6 +1528,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -1591,6 +1635,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -1837,6 +1885,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -1940,6 +1992,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -2052,6 +2108,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -2374,6 +2434,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -2477,6 +2541,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -2596,6 +2664,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -2705,6 +2777,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -2874,6 +2950,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -2977,6 +3057,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -3169,6 +3253,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -3272,6 +3360,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -3509,6 +3601,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -3618,6 +3714,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -3740,6 +3840,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -3894,6 +3998,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -4045,6 +4153,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -4351,6 +4463,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -4454,6 +4570,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -4576,6 +4696,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -4717,6 +4841,10 @@
         },
         {
           "type": "trailing_closure",
+          "named": true
+        },
+        {
+          "type": "tuple",
           "named": true
         },
         {
@@ -5007,6 +5135,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -5113,6 +5245,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -5154,6 +5290,121 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "tuple",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "call",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "compound_assignment",
+          "named": true
+        },
+        {
+          "type": "continue",
+          "named": true
+        },
+        {
+          "type": "for",
+          "named": true
+        },
+        {
+          "type": "function_propagation",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "loop",
+          "named": true
+        },
+        {
+          "type": "match",
+          "named": true
+        },
+        {
+          "type": "member",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "static_member_function",
+          "named": true
+        },
+        {
+          "type": "trailing_closure",
+          "named": true
+        },
+        {
+          "type": "tuple",
+          "named": true
+        },
+        {
+          "type": "type_constructor",
+          "named": true
+        },
+        {
+          "type": "unary",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "while",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -5319,6 +5570,10 @@
         },
         {
           "type": "mod_path",
+          "named": true
+        },
+        {
+          "type": "type_annotation",
           "named": true
         }
       ]
@@ -5496,6 +5751,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
@@ -5717,6 +5976,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -5901,6 +6164,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -6078,6 +6345,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -6184,6 +6455,10 @@
             "named": true
           },
           {
+            "type": "tuple",
+            "named": true
+          },
+          {
             "type": "type_constructor",
             "named": true
           },
@@ -6287,6 +6562,10 @@
           },
           {
             "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
             "named": true
           },
           {
