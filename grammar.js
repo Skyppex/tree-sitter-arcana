@@ -2,7 +2,7 @@ const PREC = {
   COMMENT: -100,
   CONDITIONAL: -3,
   CLOSURE: -2,
-  MATCH: -1,
+  MATCH: 1,
   ASSIGNMENT: 0,
   DEFAULT: 0,
   EXPRESSION: 0,
@@ -422,7 +422,7 @@ module.exports = grammar({
         PREC.CONDITIONAL,
         seq(
           "for",
-          field("identifier", $.identifier),
+          field("pattern", $.pattern),
           "in",
           field("iterable", $._expression),
           fatArrowOrBlock($, "body"),
@@ -485,12 +485,12 @@ module.exports = grammar({
     },
 
     variable_declaration: ($) =>
-      prec(
+      prec.left(
         PREC.DECLARATION,
         seq(
           "let",
           optional("mut"),
-          field("var_name", $.identifier),
+          field("pattern", $.pattern),
           optional(field("type", afterColon($.type_annotation))),
           "=",
           field("initializer", $._expression),
@@ -571,7 +571,7 @@ module.exports = grammar({
 
     closure_parameter: ($) =>
       seq(
-        field("param_name", $.identifier),
+        field("pattern", $.pattern),
         optional(field("param_type", afterColon($.type_annotation))),
       ),
 
@@ -601,20 +601,27 @@ module.exports = grammar({
       prec.left(
         PREC.DEFAULT,
         choice(
-          $.wildcard,
-          $.unit,
-          $.bool,
-          $.int,
-          $.uint,
-          $.float,
-          $.char,
-          $.string,
-          $.identifier,
           $.constructor,
+          $.collection_pattern,
+          $.tuple_pattern,
+          $.variable_pattern,
+          $.string,
+          $.char,
+          $.float,
+          $.uint,
+          $.int,
+          $.bool,
+          $.unit,
+          $.rest,
+          $.wildcard,
+          $.range_pattern,
         ),
       ),
 
     wildcard: (_) => "_",
+    rest: (_) => "..",
+
+    variable_pattern: (_) => prec(PREC.MATCH, /[_a-z][_a-z\d]*/),
 
     constructor: ($) =>
       prec.left(
@@ -645,6 +652,23 @@ module.exports = grammar({
           ),
         ),
       ),
+
+    tuple_pattern: ($) =>
+      prec.left(100, seq("(", sepTrailing1(",", $.pattern), ")")),
+
+    range_pattern: ($) =>
+      prec.left(
+        PREC.MATCH,
+        seq(
+          field("start", choice($.int, $.uint, $.char, $.identifier)),
+          "..",
+          optional($.inclusive),
+          field("end", choice($.int, $.uint, $.char, $.identifier)),
+        ),
+      ),
+
+    collection_pattern: ($) =>
+      prec(PREC.MATCH, seq("[", sepTrailing(",", "patterns", $.pattern), "]")),
 
     call: ($) =>
       prec.left(
@@ -747,18 +771,13 @@ module.exports = grammar({
 
     collection_elements: ($) => sepTrailing1(",", $._expression),
 
-    fields: ($) => choice($.named_fields, $.unnamed_fields),
+    fields: ($) => sepTrailing1(",", $.field),
 
-    named_fields: ($) => sepTrailing1(",", $.named_field),
-
-    named_field: ($) =>
+    field: ($) =>
       seq(
         field("field_name", $.identifier),
         field("field_initializer", afterColon($._expression)),
       ),
-
-    unnamed_fields: ($) => sepTrailing1(",", $.unnamed_field),
-    unnamed_field: ($) => field("field_initializer", $._expression),
 
     string_content: (_) => token.immediate(prec(1, /[^"\\\n]+/)),
 
