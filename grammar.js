@@ -30,7 +30,7 @@ const PREC = {
 module.exports = grammar({
   name: "arcana",
 
-  conflicts: ($) => [[$.type_annotation]],
+  conflicts: ($) => [[$.struct_field]],
 
   rules: {
     source_file: ($) => repeat($._statement),
@@ -83,7 +83,7 @@ module.exports = grammar({
     use_group: ($) => seq("{", sepTrailing1(",", $.use_path), "}"),
 
     struct_declaration: ($) =>
-      prec.right(
+      prec.left(
         PREC.DEFAULT,
         seq(
           optional($.access_modifier),
@@ -109,11 +109,14 @@ module.exports = grammar({
       ),
 
     struct_field: ($) =>
-      seq(
-        comments($),
-        optional($.access_modifier),
-        field("field_name", $.identifier),
-        field("field_type", afterColon($.type_annotation)),
+      prec.right(
+        PREC.FIELD,
+        seq(
+          comments($),
+          optional($.access_modifier),
+          field("field_name", $.identifier),
+          field("field_type", afterColon($.type_annotation)),
+        ),
       ),
 
     enum_declaration: ($) =>
@@ -138,14 +141,7 @@ module.exports = grammar({
       ),
 
     enum_member: ($) =>
-      seq(comments($), choice($.enum_shared_field, $.enum_variant)),
-
-    enum_shared_field: ($) =>
-      seq(
-        optional($.access_modifier),
-        field("field_name", $.identifier),
-        field("field_type", afterColon($.type_annotation)),
-      ),
+      seq(comments($), choice($.struct_field, $.enum_variant)),
 
     enum_variant: ($) =>
       seq(
@@ -163,7 +159,13 @@ module.exports = grammar({
     embedded_structs: ($) =>
       prec.left(
         PREC.DEFAULT,
-        seq(sepTrailing1(",", $.type_identifier_name), comments($)),
+        seq(sepTrailing1(",", $.embedded_struct), comments($)),
+      ),
+
+    embedded_struct: ($) =>
+      seq(
+        field("identifier", $.type_annotation),
+        optional(seq("{", $.fields, "}")),
       ),
 
     union_declaration: ($) =>
@@ -342,24 +344,28 @@ module.exports = grammar({
             ")",
             optional(afterColon(field("return_type", $.type_annotation))),
           ),
+          choice($.concrete_type_annotation, $.qualified_type_annotation),
+        ),
+      ),
+
+    concrete_type_annotation: ($) =>
+      prec.left(
+        choice(
           seq(
-            optional(seq($.mod_path, "::")),
-            choice(
-              seq(
-                field("type_name", $.type_identifier_name),
-                optional($.concrete_type_parameters),
-              ),
-              seq(
-                field("enum_name", $.type_identifier_name),
-                optional($.concrete_type_parameters),
-                "::",
-                field("enum_variant", $.type_identifier_name),
-                optional($.concrete_type_parameters),
-              ),
-            ),
+            field("type_name", $.type_identifier_name),
+            optional($.concrete_type_parameters),
+          ),
+          seq(
+            field("enum_name", $.type_identifier_name),
+            optional($.concrete_type_parameters),
+            "::",
+            field("enum_variant", $.type_identifier_name),
           ),
         ),
       ),
+
+    qualified_type_annotation: ($) =>
+      prec.left(seq($.mod_path, "::", $.concrete_type_annotation)),
 
     function_type_annotation: ($) =>
       prec(
@@ -695,7 +701,6 @@ module.exports = grammar({
       prec.right(
         PREC.LITERAL,
         seq(
-          optional(seq(field("path", $.mod_path), "::")),
           field("type_name", $.type_annotation),
           optional(seq("::", field("member_type_name", $.type_annotation))),
           "{",
@@ -708,8 +713,7 @@ module.exports = grammar({
       prec.right(
         PREC.LITERAL,
         seq(
-          optional(seq(field("path", $.mod_path), "::")),
-          field("struct_name", $.type_identifier),
+          field("struct_name", $.type_annotation),
           "{",
           optional(field("fields", $.fields)),
           "}",
@@ -720,8 +724,7 @@ module.exports = grammar({
       prec.right(
         PREC.LITERAL,
         seq(
-          optional(seq(field("path", $.mod_path), "::")),
-          field("enum_name", $.type_identifier),
+          field("enum_name", $.type_annotation),
           "::",
           field("enum_variant_name", $.type_identifier_name),
           "{",

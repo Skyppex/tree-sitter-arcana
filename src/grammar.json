@@ -333,7 +333,7 @@
       ]
     },
     "struct_declaration": {
-      "type": "PREC_RIGHT",
+      "type": "PREC_LEFT",
       "value": 0,
       "content": {
         "type": "SEQ",
@@ -501,65 +501,69 @@
       }
     },
     "struct_field": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "PREC",
-          "value": -100,
-          "content": {
+      "type": "PREC_RIGHT",
+      "value": 18,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PREC",
+            "value": -100,
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "comment"
+                  }
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          },
+          {
             "type": "CHOICE",
             "members": [
               {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "comment"
-                }
+                "type": "SYMBOL",
+                "name": "access_modifier"
               },
               {
                 "type": "BLANK"
               }
             ]
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
+          },
+          {
+            "type": "FIELD",
+            "name": "field_name",
+            "content": {
               "type": "SYMBOL",
-              "name": "access_modifier"
-            },
-            {
-              "type": "BLANK"
+              "name": "identifier"
             }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "field_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
+          },
+          {
+            "type": "FIELD",
+            "name": "field_type",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "type_annotation"
+                }
+              ]
+            }
           }
-        },
-        {
-          "type": "FIELD",
-          "name": "field_type",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ":"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "type_annotation"
-              }
-            ]
-          }
-        }
-      ]
+        ]
+      }
     },
     "enum_declaration": {
       "type": "PREC_RIGHT",
@@ -750,55 +754,13 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "enum_shared_field"
+              "name": "struct_field"
             },
             {
               "type": "SYMBOL",
               "name": "enum_variant"
             }
           ]
-        }
-      ]
-    },
-    "enum_shared_field": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "access_modifier"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "field_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "field_type",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ":"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "type_annotation"
-              }
-            ]
-          }
         }
       ]
     },
@@ -879,7 +841,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "type_identifier_name"
+                "name": "embedded_struct"
               },
               {
                 "type": "REPEAT",
@@ -892,7 +854,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "type_identifier_name"
+                      "name": "embedded_struct"
                     }
                   ]
                 }
@@ -932,6 +894,44 @@
           }
         ]
       }
+    },
+    "embedded_struct": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "identifier",
+          "content": {
+            "type": "SYMBOL",
+            "name": "type_annotation"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "{"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "fields"
+                },
+                {
+                  "type": "STRING",
+                  "value": "}"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "union_declaration": {
       "type": "SEQ",
@@ -2508,23 +2508,69 @@
             ]
           },
           {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "concrete_type_annotation"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "qualified_type_annotation"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "concrete_type_annotation": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
             "type": "SEQ",
             "members": [
+              {
+                "type": "FIELD",
+                "name": "type_name",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "type_identifier_name"
+                }
+              },
               {
                 "type": "CHOICE",
                 "members": [
                   {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "mod_path"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "::"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "concrete_type_parameters"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "enum_name",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "type_identifier_name"
+                }
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "concrete_type_parameters"
                   },
                   {
                     "type": "BLANK"
@@ -2532,85 +2578,39 @@
                 ]
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "FIELD",
-                        "name": "type_name",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "type_identifier_name"
-                        }
-                      },
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "concrete_type_parameters"
-                          },
-                          {
-                            "type": "BLANK"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "FIELD",
-                        "name": "enum_name",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "type_identifier_name"
-                        }
-                      },
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "concrete_type_parameters"
-                          },
-                          {
-                            "type": "BLANK"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "::"
-                      },
-                      {
-                        "type": "FIELD",
-                        "name": "enum_variant",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "type_identifier_name"
-                        }
-                      },
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "concrete_type_parameters"
-                          },
-                          {
-                            "type": "BLANK"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "type": "STRING",
+                "value": "::"
+              },
+              {
+                "type": "FIELD",
+                "name": "enum_variant",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "type_identifier_name"
+                }
               }
             ]
+          }
+        ]
+      }
+    },
+    "qualified_type_annotation": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "mod_path"
+          },
+          {
+            "type": "STRING",
+            "value": "::"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "concrete_type_annotation"
           }
         ]
       }
@@ -5054,31 +5054,6 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "FIELD",
-                    "name": "path",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "mod_path"
-                    }
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "::"
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
             "type": "FIELD",
             "name": "type_name",
             "content": {
@@ -5145,36 +5120,11 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "FIELD",
-                    "name": "path",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "mod_path"
-                    }
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "::"
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
             "type": "FIELD",
             "name": "struct_name",
             "content": {
               "type": "SYMBOL",
-              "name": "type_identifier"
+              "name": "type_annotation"
             }
           },
           {
@@ -5211,36 +5161,11 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "FIELD",
-                    "name": "path",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "mod_path"
-                    }
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "::"
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
             "type": "FIELD",
             "name": "enum_name",
             "content": {
               "type": "SYMBOL",
-              "name": "type_identifier"
+              "name": "type_annotation"
             }
           },
           {
@@ -5895,11 +5820,12 @@
   ],
   "conflicts": [
     [
-      "type_annotation"
+      "struct_field"
     ]
   ],
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

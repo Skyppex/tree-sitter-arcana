@@ -1682,6 +1682,52 @@
     }
   },
   {
+    "type": "concrete_type_annotation",
+    "named": true,
+    "fields": {
+      "enum_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
+      },
+      "enum_variant": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
+      },
+      "type_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "concrete_type_parameters",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "concrete_type_parameters",
     "named": true,
     "fields": {
@@ -2155,6 +2201,32 @@
     }
   },
   {
+    "type": "embedded_struct",
+    "named": true,
+    "fields": {
+      "identifier": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "fields",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "embedded_structs",
     "named": true,
     "fields": {},
@@ -2167,7 +2239,7 @@
           "named": true
         },
         {
-          "type": "type_identifier_name",
+          "type": "embedded_struct",
           "named": true
         }
       ]
@@ -2232,11 +2304,11 @@
           "named": true
         },
         {
-          "type": "enum_shared_field",
+          "type": "enum_variant",
           "named": true
         },
         {
-          "type": "enum_variant",
+          "type": "struct_field",
           "named": true
         }
       ]
@@ -2256,46 +2328,6 @@
         },
         {
           "type": "enum_member",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "enum_shared_field",
-    "named": true,
-    "fields": {
-      "field_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "field_type": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ":",
-            "named": false
-          },
-          {
-            "type": "type_annotation",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "access_modifier",
           "named": true
         }
       ]
@@ -4388,6 +4420,25 @@
     }
   },
   {
+    "type": "qualified_type_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "concrete_type_annotation",
+          "named": true
+        },
+        {
+          "type": "mod_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "range",
     "named": true,
     "fields": {
@@ -5602,26 +5653,6 @@
           }
         ]
       },
-      "enum_name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      },
-      "enum_variant": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      },
       "param_types": {
         "multiple": true,
         "required": false,
@@ -5645,16 +5676,6 @@
             "named": true
           }
         ]
-      },
-      "type_name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
@@ -5662,11 +5683,11 @@
       "required": false,
       "types": [
         {
-          "type": "concrete_type_parameters",
+          "type": "concrete_type_annotation",
           "named": true
         },
         {
-          "type": "mod_path",
+          "type": "qualified_type_annotation",
           "named": true
         },
         {
@@ -5696,16 +5717,6 @@
         "types": [
           {
             "type": "type_annotation",
-            "named": true
-          }
-        ]
-      },
-      "path": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "mod_path",
             "named": true
           }
         ]
