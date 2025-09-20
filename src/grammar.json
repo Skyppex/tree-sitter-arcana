@@ -2709,7 +2709,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "function_propagation"
+            "name": "propagation"
           },
           {
             "type": "SYMBOL",
@@ -4128,7 +4128,7 @@
         ]
       }
     },
-    "function_propagation": {
+    "propagation": {
       "type": "PREC_LEFT",
       "value": 18,
       "content": {
@@ -4147,15 +4147,49 @@
             "value": ":"
           },
           {
-            "type": "FIELD",
-            "name": "function",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expression"
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "function",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "indexer",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "indexer"
+                }
+              }
+            ]
           }
         ]
       }
+    },
+    "indexer": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "FIELD",
+          "name": "index",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
     },
     "closure": {
       "type": "PREC_LEFT",
@@ -5821,6 +5855,10 @@
   "conflicts": [
     [
       "struct_field"
+    ],
+    [
+      "indexer",
+      "collection_elements"
     ]
   ],
   "precedences": [],

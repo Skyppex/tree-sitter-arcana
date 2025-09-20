@@ -48,10 +48,6 @@
           "named": true
         },
         {
-          "type": "function_propagation",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -73,6 +69,10 @@
         },
         {
           "type": "member",
+          "named": true
+        },
+        {
+          "type": "propagation",
           "named": true
         },
         {
@@ -178,10 +178,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -203,6 +199,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -288,10 +288,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -313,6 +309,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -434,10 +434,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -459,6 +455,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -622,10 +622,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -647,6 +643,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -750,10 +750,6 @@
           "named": true
         },
         {
-          "type": "function_propagation",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -783,6 +779,10 @@
         },
         {
           "type": "mod",
+          "named": true
+        },
+        {
+          "type": "propagation",
           "named": true
         },
         {
@@ -903,10 +903,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -928,6 +924,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -1029,10 +1029,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -1054,6 +1050,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -1150,10 +1150,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -1175,6 +1171,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -1350,10 +1350,6 @@
           "named": true
         },
         {
-          "type": "function_propagation",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -1375,6 +1371,10 @@
         },
         {
           "type": "member",
+          "named": true
+        },
+        {
+          "type": "propagation",
           "named": true
         },
         {
@@ -1504,10 +1504,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -1529,6 +1525,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -1614,10 +1614,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -1639,6 +1635,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -1907,10 +1907,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -1932,6 +1928,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2017,10 +2017,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2042,6 +2038,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2133,10 +2133,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2158,6 +2154,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2422,10 +2422,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2447,6 +2443,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2568,10 +2568,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2593,6 +2589,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2678,10 +2678,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2703,6 +2699,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2788,10 +2788,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2813,6 +2809,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -2914,10 +2914,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -2939,6 +2935,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -3033,232 +3033,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "function_propagation",
-    "named": true,
-    "fields": {
-      "function": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "binary",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          },
-          {
-            "type": "break",
-            "named": true
-          },
-          {
-            "type": "call",
-            "named": true
-          },
-          {
-            "type": "closure",
-            "named": true
-          },
-          {
-            "type": "collection",
-            "named": true
-          },
-          {
-            "type": "compound_assignment",
-            "named": true
-          },
-          {
-            "type": "continue",
-            "named": true
-          },
-          {
-            "type": "for",
-            "named": true
-          },
-          {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if",
-            "named": true
-          },
-          {
-            "type": "literal",
-            "named": true
-          },
-          {
-            "type": "loop",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "member",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "return",
-            "named": true
-          },
-          {
-            "type": "static_member_function",
-            "named": true
-          },
-          {
-            "type": "trailing_closure",
-            "named": true
-          },
-          {
-            "type": "tuple",
-            "named": true
-          },
-          {
-            "type": "type_constructor",
-            "named": true
-          },
-          {
-            "type": "unary",
-            "named": true
-          },
-          {
-            "type": "variable_declaration",
-            "named": true
-          },
-          {
-            "type": "while",
-            "named": true
-          }
-        ]
-      },
-      "prop": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "assignment",
-            "named": true
-          },
-          {
-            "type": "binary",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          },
-          {
-            "type": "break",
-            "named": true
-          },
-          {
-            "type": "call",
-            "named": true
-          },
-          {
-            "type": "closure",
-            "named": true
-          },
-          {
-            "type": "collection",
-            "named": true
-          },
-          {
-            "type": "compound_assignment",
-            "named": true
-          },
-          {
-            "type": "continue",
-            "named": true
-          },
-          {
-            "type": "for",
-            "named": true
-          },
-          {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if",
-            "named": true
-          },
-          {
-            "type": "literal",
-            "named": true
-          },
-          {
-            "type": "loop",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "member",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "return",
-            "named": true
-          },
-          {
-            "type": "static_member_function",
-            "named": true
-          },
-          {
-            "type": "trailing_closure",
-            "named": true
-          },
-          {
-            "type": "tuple",
-            "named": true
-          },
-          {
-            "type": "type_constructor",
-            "named": true
-          },
-          {
-            "type": "unary",
-            "named": true
-          },
-          {
-            "type": "variable_declaration",
-            "named": true
-          },
-          {
-            "type": "while",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -3387,10 +3161,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -3412,6 +3182,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -3497,10 +3271,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -3522,6 +3292,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -3638,6 +3412,122 @@
     "fields": {}
   },
   {
+    "type": "indexer",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "assignment",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "break",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
+            "named": true
+          },
+          {
+            "type": "compound_assignment",
+            "named": true
+          },
+          {
+            "type": "continue",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "return",
+            "named": true
+          },
+          {
+            "type": "static_member_function",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
+            "named": true
+          },
+          {
+            "type": "unary",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "int",
     "named": true,
     "fields": {}
@@ -3735,10 +3625,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -3760,6 +3646,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -3851,10 +3741,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -3876,6 +3762,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -3977,10 +3867,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -4002,6 +3888,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -4132,10 +4022,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -4157,6 +4043,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -4376,6 +4266,242 @@
     }
   },
   {
+    "type": "propagation",
+    "named": true,
+    "fields": {
+      "function": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "assignment",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "break",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
+            "named": true
+          },
+          {
+            "type": "compound_assignment",
+            "named": true
+          },
+          {
+            "type": "continue",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "return",
+            "named": true
+          },
+          {
+            "type": "static_member_function",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
+            "named": true
+          },
+          {
+            "type": "unary",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "indexer": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "indexer",
+            "named": true
+          }
+        ]
+      },
+      "prop": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "assignment",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "break",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
+            "named": true
+          },
+          {
+            "type": "compound_assignment",
+            "named": true
+          },
+          {
+            "type": "continue",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "return",
+            "named": true
+          },
+          {
+            "type": "static_member_function",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
+            "named": true
+          },
+          {
+            "type": "unary",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "protocol_declaration",
     "named": true,
     "fields": {
@@ -4487,10 +4613,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -4512,6 +4634,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -4597,10 +4723,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -4622,6 +4744,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -4788,10 +4914,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -4813,6 +4935,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -4917,10 +5043,6 @@
           "named": true
         },
         {
-          "type": "function_propagation",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -4950,6 +5072,10 @@
         },
         {
           "type": "mod",
+          "named": true
+        },
+        {
+          "type": "propagation",
           "named": true
         },
         {
@@ -5224,10 +5350,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -5249,6 +5371,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -5334,10 +5460,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -5359,6 +5481,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -5474,10 +5600,6 @@
           "named": true
         },
         {
-          "type": "function_propagation",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -5499,6 +5621,10 @@
         },
         {
           "type": "member",
+          "named": true
+        },
+        {
+          "type": "propagation",
           "named": true
         },
         {
@@ -5818,10 +5944,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -5843,6 +5965,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -6097,10 +6223,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -6122,6 +6244,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -6283,10 +6409,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -6308,6 +6430,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -6393,10 +6519,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -6418,6 +6540,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {
@@ -6503,10 +6629,6 @@
             "named": true
           },
           {
-            "type": "function_propagation",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
@@ -6528,6 +6650,10 @@
           },
           {
             "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
             "named": true
           },
           {

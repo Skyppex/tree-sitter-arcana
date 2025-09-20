@@ -30,7 +30,7 @@ const PREC = {
 module.exports = grammar({
   name: "arcana",
 
-  conflicts: ($) => [[$.struct_field]],
+  conflicts: ($) => [[$.struct_field], [$.indexer, $.collection_elements]],
 
   rules: {
     source_file: ($) => repeat($._statement),
@@ -391,7 +391,7 @@ module.exports = grammar({
           $.variable_declaration,
           $.if,
           $.unary,
-          $.function_propagation,
+          $.propagation,
           $.closure,
           $.match,
           $.trailing_closure,
@@ -550,15 +550,17 @@ module.exports = grammar({
         ),
       ),
 
-    function_propagation: ($) =>
+    propagation: ($) =>
       prec.left(
         PREC.FIELD,
         seq(
           field("prop", $._expression),
           ":",
-          field("function", $._expression),
+          choice(field("function", $._expression), field("indexer", $.indexer)),
         ),
       ),
+
+    indexer: ($) => seq("[", field("index", $._expression), "]"),
 
     closure: ($) =>
       prec.left(
