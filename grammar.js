@@ -333,7 +333,7 @@ module.exports = grammar({
           "Int",
           "UInt",
           "Float",
-          "Char",
+          "Rune",
           "String",
           seq("[", field("array_type", $.type_annotation), "]"),
           seq("(", sepTrailing1(",", $.type_annotation), ")"),
@@ -614,7 +614,7 @@ module.exports = grammar({
           $.tuple_pattern,
           $.variable_pattern,
           $.string,
-          $.char,
+          $.rune,
           $.float,
           $.uint,
           $.int,
@@ -668,10 +668,10 @@ module.exports = grammar({
       prec.left(
         PREC.MATCH,
         seq(
-          field("start", choice($.int, $.uint, $.char, $.identifier)),
+          field("start", choice($.int, $.uint, $.rune, $.identifier)),
           "..",
           optional($.inclusive),
-          field("end", choice($.int, $.uint, $.char, $.identifier)),
+          field("end", choice($.int, $.uint, $.rune, $.identifier)),
         ),
       ),
 
@@ -748,7 +748,7 @@ module.exports = grammar({
     literal: ($) =>
       prec(
         PREC.LITERAL,
-        choice($.unit, $.bool, $.int, $.uint, $.float, $.char, $.string),
+        choice($.unit, $.bool, $.int, $.uint, $.float, $.rune, $.string),
       ),
 
     tuple: ($) => seq("(", sepTrailing1(",", $._expression), ")"),
@@ -766,7 +766,7 @@ module.exports = grammar({
       choice(token(/\d+u/), seq(choice("0b", "0o", "0d", "0x"), token(/\d+u/))),
 
     float: (_) => choice(token(/\d+f/), token(/\d*\.\d+f?/)),
-    char: (_) => choice(token(/'.'/), token(/'\\.'/)),
+    rune: (_) => choice(token(/'.'/), token(/'\\.'/)),
 
     string: ($) =>
       seq('"', repeat(choice($.string_content, $.escape_sequence)), '"'),

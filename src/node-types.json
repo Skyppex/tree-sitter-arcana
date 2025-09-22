@@ -1097,11 +1097,6 @@
     }
   },
   {
-    "type": "char",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "closure",
     "named": true,
     "fields": {
@@ -3550,15 +3545,15 @@
           "named": true
         },
         {
-          "type": "char",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
         {
           "type": "int",
+          "named": true
+        },
+        {
+          "type": "rune",
           "named": true
         },
         {
@@ -4211,10 +4206,6 @@
           "named": true
         },
         {
-          "type": "char",
-          "named": true
-        },
-        {
           "type": "collection_pattern",
           "named": true
         },
@@ -4236,6 +4227,10 @@
         },
         {
           "type": "rest",
+          "named": true
+        },
+        {
+          "type": "rune",
           "named": true
         },
         {
@@ -4809,15 +4804,15 @@
         "required": true,
         "types": [
           {
-            "type": "char",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "int",
+            "named": true
+          },
+          {
+            "type": "rune",
             "named": true
           },
           {
@@ -4831,15 +4826,15 @@
         "required": true,
         "types": [
           {
-            "type": "char",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "int",
+            "named": true
+          },
+          {
+            "type": "rune",
             "named": true
           },
           {
@@ -4980,6 +4975,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "rune",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "source_file",
@@ -6861,15 +6861,15 @@
     "named": false
   },
   {
-    "type": "Char",
-    "named": false
-  },
-  {
     "type": "Float",
     "named": false
   },
   {
     "type": "Int",
+    "named": false
+  },
+  {
+    "type": "Rune",
     "named": false
   },
   {
