@@ -4982,6 +4982,11 @@
     "fields": {}
   },
   {
+    "type": "shebang",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -5088,6 +5093,10 @@
         },
         {
           "type": "return",
+          "named": true
+        },
+        {
+          "type": "shebang",
           "named": true
         },
         {
@@ -6706,6 +6715,10 @@
   },
   {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": "#!",
     "named": false
   },
   {

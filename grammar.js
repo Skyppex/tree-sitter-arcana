@@ -33,7 +33,10 @@ module.exports = grammar({
   conflicts: ($) => [[$.struct_field], [$.indexer, $.collection_elements]],
 
   rules: {
-    source_file: ($) => repeat($._statement),
+    source_file: ($) =>
+      seq(optional($.shebang), optional(repeat($._statement))),
+
+    shebang: () => seq("#!", /.*\r?\n?/),
 
     _statement: ($) =>
       seq(
