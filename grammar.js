@@ -147,14 +147,25 @@ module.exports = grammar({
       seq(comments($), choice($.struct_field, $.enum_variant)),
 
     enum_variant: ($) =>
-      seq(
-        field("variant_name", $.type_identifier_name),
-        optional(
-          seq(
-            "{",
-            optional(field("embedded_structs", $.embedded_structs)),
-            optional(field("fields", $.struct_fields)),
-            "}",
+      choice(
+        seq(
+          optional("struct"),
+          field("variant_name", $.type_identifier_name),
+          optional(
+            seq(
+              "{",
+              optional(field("embedded_structs", $.embedded_structs)),
+              optional(field("fields", $.struct_fields)),
+              "}",
+            ),
+          ),
+        ),
+        seq(
+          "enum",
+          field("variant_name", $.type_identifier_name),
+          choice(
+            seq("{", optional(field("members", $.enum_members)), "}"),
+            ";",
           ),
         ),
       ),
@@ -615,7 +626,7 @@ module.exports = grammar({
           $.constructor,
           $.collection_pattern,
           $.tuple_pattern,
-          $.variable_pattern,
+          $.binding_pattern,
           $.string,
           $.rune,
           $.float,
@@ -632,14 +643,22 @@ module.exports = grammar({
     wildcard: (_) => "_",
     rest: (_) => "..",
 
-    variable_pattern: (_) => prec(PREC.MATCH, /[_a-z][_a-z\d]*/),
+    binding_pattern: ($) =>
+      seq(prec(PREC.MATCH, /[_a-z][_a-z\d]*/), optional(seq("@", $.pattern))),
 
     constructor: ($) =>
       prec.left(
         PREC.MATCH,
-        seq(
-          field("type", $.type_annotation),
-          optional(field("fields", $.constructor_fields)),
+        choice(
+          seq(
+            field("type", $.type_annotation),
+            optional(field("fields", $.constructor_fields)),
+          ),
+          seq(
+            seq("::", field("type", $.type_annotation)),
+            repeat(seq("::", field("type", $.type_annotation))),
+            optional(field("fields", $.constructor_fields)),
+          ),
         ),
       ),
 

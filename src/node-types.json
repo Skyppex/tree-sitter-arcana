@@ -690,6 +690,21 @@
     }
   },
   {
+    "type": "binding_pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "pattern",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "block",
     "named": true,
     "fields": {},
@@ -1773,7 +1788,7 @@
         ]
       },
       "type": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -2348,6 +2363,16 @@
         "types": [
           {
             "type": "struct_fields",
+            "named": true
+          }
+        ]
+      },
+      "members": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "enum_members",
             "named": true
           }
         ]
@@ -4202,6 +4227,10 @@
       "required": true,
       "types": [
         {
+          "type": "binding_pattern",
+          "named": true
+        },
+        {
           "type": "bool",
           "named": true
         },
@@ -4247,10 +4276,6 @@
         },
         {
           "type": "unit",
-          "named": true
-        },
-        {
-          "type": "variable_pattern",
           "named": true
         },
         {
@@ -6324,11 +6349,6 @@
     }
   },
   {
-    "type": "variable_pattern",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "where_clause",
     "named": true,
     "fields": {
@@ -6867,6 +6887,10 @@
   },
   {
     "type": ">>",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {
