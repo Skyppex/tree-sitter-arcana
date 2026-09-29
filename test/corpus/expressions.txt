@@ -1,0 +1,252 @@
+======================
+braceless enum variant
+======================
+
+let e = E::A;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (enum_literal
+      enum_name: (type_identifier
+        name: (type_identifier_name))
+      enum_variant: (type_identifier_name))))
+
+========================
+nested braceless variant
+========================
+
+let e = E::Inner::B;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (enum_literal
+      enum_name: (type_identifier
+        name: (type_identifier_name))
+      enum_variant: (type_identifier_name)
+      enum_variant: (type_identifier_name))))
+
+===================
+variant constructor
+===================
+
+let e = E::A { v: 1 };
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (type_constructor
+      type_name: (concrete_type_annotation
+        enum_name: (type_identifier
+          name: (type_identifier_name))
+        enum_variant: (type_identifier_name))
+      fields: (fields
+        (field
+          field_name: (identifier)
+          field_initializer: (literal
+            (int)))))))
+
+==========================
+nested variant constructor
+==========================
+
+let e = E::Inner::B { v: 1, w: 2 };
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (type_constructor
+      type_name: (concrete_type_annotation
+        enum_name: (type_identifier
+          name: (type_identifier_name))
+        enum_variant: (type_identifier_name)
+        enum_variant: (type_identifier_name))
+      fields: (fields
+        (field
+          field_name: (identifier)
+          field_initializer: (literal
+            (int)))
+        (field
+          field_name: (identifier)
+          field_initializer: (literal
+            (int)))))))
+
+==================
+struct constructor
+==================
+
+let p = Point { x: 1, y: 2 };
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (type_constructor
+      type_name: (concrete_type_annotation
+        type_name: (type_identifier_name))
+      fields: (fields
+        (field
+          field_name: (identifier)
+          field_initializer: (literal
+            (int)))
+        (field
+          field_name: (identifier)
+          field_initializer: (literal
+            (int)))))))
+
+==============
+turbofish call
+==============
+
+let r = id::<Int>(1);
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (call
+      callee: (generic_instantiation
+        function: (identifier)
+        generics: (generic_type_parameters
+          type: (type_annotation)))
+      args: (arguments
+        (argument
+          (literal
+            (int)))))))
+
+================================
+turbofish with several arguments
+================================
+
+let r = first::<Int, String>(1);
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (call
+      callee: (generic_instantiation
+        function: (identifier)
+        generics: (generic_type_parameters
+          type: (type_annotation)
+          type: (type_annotation)))
+      args: (arguments
+        (argument
+          (literal
+            (int)))))))
+
+======================
+static member function
+======================
+
+let r = E::make();
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (call
+      callee: (static_member_function
+        type: (type_identifier
+          name: (type_identifier_name))
+        function: (function_type_identifier
+          name: (function_type_identifier_name))))))
+
+======================
+closure with fat arrow
+======================
+
+let f = |a: Int|: Int => a + 1;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (closure
+      params: (closure_parameters
+        (closure_parameter
+          pattern: (pattern
+            (binding_pattern))
+          param_type: (type_annotation)))
+      return_type: (type_annotation)
+      body: (binary
+        left: (identifier)
+        right: (literal
+          (int))))))
+
+=========================
+closure without fat arrow
+=========================
+
+let f = |a| a;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (closure
+      params: (closure_parameters
+        (closure_parameter
+          pattern: (pattern
+            (binding_pattern))))
+      body: (identifier))))
+
+================
+trailing closure
+================
+
+let r = a -> 5;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (trailing_closure
+      function: (identifier)
+      body: (literal
+        (int)))))
+
+=================================
+trailing closure with return type
+=================================
+
+let r = a -> :Int 8;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (trailing_closure
+      function: (identifier)
+      return_type: (type_annotation)
+      body: (literal
+        (int)))))

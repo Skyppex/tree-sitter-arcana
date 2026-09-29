@@ -1,5 +1,10 @@
 [
   {
+    "type": "access_modifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "argument",
     "named": true,
     "fields": {},
@@ -44,7 +49,15 @@
           "named": true
         },
         {
+          "type": "enum_literal",
+          "named": true
+        },
+        {
           "type": "for",
+          "named": true
+        },
+        {
+          "type": "generic_instantiation",
           "named": true
         },
         {
@@ -174,7 +187,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -284,7 +305,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -430,7 +459,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -618,7 +655,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -757,11 +802,19 @@
           "named": true
         },
         {
+          "type": "enum_literal",
+          "named": true
+        },
+        {
           "type": "for",
           "named": true
         },
         {
           "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "generic_instantiation",
           "named": true
         },
         {
@@ -914,7 +967,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -1040,7 +1101,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -1156,7 +1225,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -1356,7 +1433,15 @@
           "named": true
         },
         {
+          "type": "enum_literal",
+          "named": true
+        },
+        {
           "type": "for",
+          "named": true
+        },
+        {
+          "type": "generic_instantiation",
           "named": true
         },
         {
@@ -1466,6 +1551,60 @@
     }
   },
   {
+    "type": "comparison_pattern",
+    "named": true,
+    "fields": {
+      "bound": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "rune",
+            "named": true
+          },
+          {
+            "type": "uint",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "compound_assignment",
     "named": true,
     "fields": {
@@ -1510,7 +1649,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -1620,7 +1767,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -1700,13 +1855,13 @@
         "required": false,
         "types": [
           {
-            "type": "type_identifier_name",
+            "type": "type_identifier",
             "named": true
           }
         ]
       },
       "enum_variant": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1731,43 +1886,7 @@
       "required": false,
       "types": [
         {
-          "type": "concrete_type_parameters",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "concrete_type_parameters",
-    "named": true,
-    "fields": {
-      "associated_type_name": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      },
-      "type_name": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "type_identifier_name",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "type_identifier_name",
+          "type": "generic_type_parameters",
           "named": true
         }
       ]
@@ -1777,6 +1896,16 @@
     "type": "constructor",
     "named": true,
     "fields": {
+      "binding": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "binding_pattern",
+            "named": true
+          }
+        ]
+      },
       "fields": {
         "multiple": false,
         "required": false,
@@ -1788,11 +1917,21 @@
         ]
       },
       "type": {
-        "multiple": true,
-        "required": true,
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "type_annotation",
+            "named": true
+          }
+        ]
+      },
+      "variant": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -1913,7 +2052,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2023,7 +2170,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2139,7 +2294,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2302,6 +2465,32 @@
     }
   },
   {
+    "type": "enum_literal",
+    "named": true,
+    "fields": {
+      "enum_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier",
+            "named": true
+          }
+        ]
+      },
+      "enum_variant": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "enum_member",
     "named": true,
     "fields": {},
@@ -2438,7 +2627,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2584,7 +2781,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2694,7 +2899,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2804,7 +3017,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -2930,7 +3151,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -3087,9 +3316,138 @@
     "fields": {}
   },
   {
-    "type": "generic_identifier",
+    "type": "generic_instantiation",
     "named": true,
-    "fields": {}
+    "fields": {
+      "function": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "assignment",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "break",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "collection",
+            "named": true
+          },
+          {
+            "type": "compound_assignment",
+            "named": true
+          },
+          {
+            "type": "continue",
+            "named": true
+          },
+          {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
+            "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "if",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "loop",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "member",
+            "named": true
+          },
+          {
+            "type": "propagation",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "return",
+            "named": true
+          },
+          {
+            "type": "static_member_function",
+            "named": true
+          },
+          {
+            "type": "trailing_closure",
+            "named": true
+          },
+          {
+            "type": "tuple",
+            "named": true
+          },
+          {
+            "type": "type_constructor",
+            "named": true
+          },
+          {
+            "type": "unary",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while",
+            "named": true
+          }
+        ]
+      },
+      "generics": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "generic_type_parameters",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "generic_type_parameters",
@@ -3105,12 +3463,22 @@
           }
         ]
       },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "type_annotation",
+            "named": true
+          }
+        ]
+      },
       "type_name": {
         "multiple": true,
         "required": false,
         "types": [
           {
-            "type": "generic_identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -3121,7 +3489,7 @@
       "required": false,
       "types": [
         {
-          "type": "generic_identifier",
+          "type": "type_identifier_name",
           "named": true
         }
       ]
@@ -3177,7 +3545,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -3287,7 +3663,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -3476,7 +3860,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -3597,6 +3989,54 @@
     }
   },
   {
+    "type": "literal_type",
+    "named": true,
+    "fields": {
+      "literal_type_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_identifier_name",
+            "named": true
+          }
+        ]
+      },
+      "sign": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "loop",
     "named": true,
     "fields": {
@@ -3641,7 +4081,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -3757,7 +4205,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -3883,7 +4339,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -4038,7 +4502,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -4239,7 +4711,15 @@
           "named": true
         },
         {
+          "type": "comparison_pattern",
+          "named": true
+        },
+        {
           "type": "constructor",
+          "named": true
+        },
+        {
+          "type": "constructor_fields",
           "named": true
         },
         {
@@ -4330,7 +4810,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -4450,7 +4938,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -4629,7 +5125,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -4739,7 +5243,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -4930,7 +5442,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -5065,11 +5585,19 @@
           "named": true
         },
         {
+          "type": "enum_literal",
+          "named": true
+        },
+        {
           "type": "for",
           "named": true
         },
         {
           "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "generic_instantiation",
           "named": true
         },
         {
@@ -5380,7 +5908,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -5490,7 +6026,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -5630,7 +6174,15 @@
           "named": true
         },
         {
+          "type": "enum_literal",
+          "named": true
+        },
+        {
           "type": "for",
+          "named": true
+        },
+        {
+          "type": "generic_instantiation",
           "named": true
         },
         {
@@ -5847,6 +6399,10 @@
           "named": true
         },
         {
+          "type": "literal_type",
+          "named": true
+        },
+        {
           "type": "qualified_type_annotation",
           "named": true
         },
@@ -5871,22 +6427,16 @@
           }
         ]
       },
-      "member_type_name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_annotation",
-            "named": true
-          }
-        ]
-      },
       "type_name": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "type_annotation",
+            "type": "concrete_type_annotation",
+            "named": true
+          },
+          {
+            "type": "qualified_type_annotation",
             "named": true
           }
         ]
@@ -5974,7 +6524,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -6214,7 +6772,7 @@
     "fields": {
       "initializer": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "assignment",
@@ -6253,7 +6811,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -6364,10 +6930,10 @@
       },
       "type_name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "generic_identifier",
+            "type": "type_identifier_name",
             "named": true
           }
         ]
@@ -6434,7 +7000,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -6544,7 +7118,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -6654,7 +7236,15 @@
             "named": true
           },
           {
+            "type": "enum_literal",
+            "named": true
+          },
+          {
             "type": "for",
+            "named": true
+          },
+          {
+            "type": "generic_instantiation",
             "named": true
           },
           {
@@ -6735,6 +7325,10 @@
   },
   {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": "#",
     "named": false
   },
   {
@@ -6942,10 +7536,6 @@
     "named": false
   },
   {
-    "type": "access_modifier",
-    "named": true
-  },
-  {
     "type": "and",
     "named": false
   },
@@ -6994,6 +7584,10 @@
     "named": false
   },
   {
+    "type": "is",
+    "named": false
+  },
+  {
     "type": "let",
     "named": false
   },
@@ -7022,6 +7616,10 @@
     "named": false
   },
   {
+    "type": "pub",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
@@ -7031,6 +7629,10 @@
   },
   {
     "type": "struct",
+    "named": false
+  },
+  {
+    "type": "sup",
     "named": false
   },
   {

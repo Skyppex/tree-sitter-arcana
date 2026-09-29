@@ -1,0 +1,205 @@
+==================
+enum with variants
+==================
+
+enum E { A, B { v: Int } }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    members: (enum_members
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)))
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          fields: (struct_fields
+            (struct_field
+              field_name: (identifier)
+              field_type: (type_annotation))))))))
+
+=======================
+enum with shared fields
+=======================
+
+enum E { id: Int, A, B { v: Int } }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    members: (enum_members
+      (enum_member
+        (struct_field
+          field_name: (identifier)
+          field_type: (type_annotation)))
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)))
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          fields: (struct_fields
+            (struct_field
+              field_name: (identifier)
+              field_type: (type_annotation))))))))
+
+=========================================
+enum variant with explicit struct keyword
+=========================================
+
+enum E { struct A { v: Int } }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    members: (enum_members
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          fields: (struct_fields
+            (struct_field
+              field_name: (identifier)
+              field_type: (type_annotation))))))))
+
+===================
+nested enum variant
+===================
+
+enum E { A, enum Inner { B, C { v: Int } } }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    members: (enum_members
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)))
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          members: (enum_members
+            (enum_member
+              (enum_variant
+                variant_name: (type_identifier_name)))
+            (enum_member
+              (enum_variant
+                variant_name: (type_identifier_name)
+                fields: (struct_fields
+                  (struct_field
+                    field_name: (identifier)
+                    field_type: (type_annotation)))))))))))
+
+==============================
+nested enum with shared fields
+==============================
+
+enum E { A, enum Inner { tag: Int, B } }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    members: (enum_members
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)))
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          members: (enum_members
+            (enum_member
+              (struct_field
+                field_name: (identifier)
+                field_type: (type_annotation)))
+            (enum_member
+              (enum_variant
+                variant_name: (type_identifier_name)))))))))
+
+===================
+deeply nested enums
+===================
+
+enum A { enum B { enum C { Leaf } } }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    members: (enum_members
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          members: (enum_members
+            (enum_member
+              (enum_variant
+                variant_name: (type_identifier_name)
+                members: (enum_members
+                  (enum_member
+                    (enum_variant
+                      variant_name: (type_identifier_name))))))))))))
+
+==============================
+generic enum with where clause
+==============================
+
+enum Holder<T> where T is Show { Held { value: T }, Empty }
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name)
+      generics: (generic_type_parameters
+        type: (type_annotation
+          (concrete_type_annotation
+            type_name: (type_identifier_name)))))
+    where_clauses: (where_clauses
+      (where_clause
+        type_name: (type_identifier_name)
+        protocol_name: (type_annotation
+          (concrete_type_annotation
+            type_name: (type_identifier_name)))))
+    members: (enum_members
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name)
+          fields: (struct_fields
+            (struct_field
+              field_name: (identifier)
+              field_type: (type_annotation
+                (concrete_type_annotation
+                  type_name: (type_identifier_name)))))))
+      (enum_member
+        (enum_variant
+          variant_name: (type_identifier_name))))))
+
+=====================
+forward declared enum
+=====================
+
+enum E;
+
+---
+
+(source_file
+  (enum_declaration
+    identifier: (type_identifier
+      name: (type_identifier_name))))

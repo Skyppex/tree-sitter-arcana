@@ -1,0 +1,237 @@
+====================================
+upper case after colons is a variant
+====================================
+
+let x = Enum::Variant;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (enum_literal
+      enum_name: (type_identifier
+        name: (type_identifier_name))
+      enum_variant: (type_identifier_name))))
+
+=====================================
+lower case after colons is a function
+=====================================
+
+let x = Enum::make;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (static_member_function
+      type: (type_identifier
+        name: (type_identifier_name))
+      function: (function_type_identifier
+        name: (function_type_identifier_name)))))
+
+===============================
+lower case after colons, called
+===============================
+
+let x = Enum::make();
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (call
+      callee: (static_member_function
+        type: (type_identifier
+          name: (type_identifier_name))
+        function: (function_type_identifier
+          name: (function_type_identifier_name))))))
+
+=================================
+variant and function side by side
+=================================
+
+let a = Enum::Variant;
+let b = Enum::make();
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (enum_literal
+      enum_name: (type_identifier
+        name: (type_identifier_name))
+      enum_variant: (type_identifier_name)))
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (call
+      callee: (static_member_function
+        type: (type_identifier
+          name: (type_identifier_name))
+        function: (function_type_identifier
+          name: (function_type_identifier_name))))))
+
+==============
+nested variant
+==============
+
+let x = Enum::Inner::Variant;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (enum_literal
+      enum_name: (type_identifier
+        name: (type_identifier_name))
+      enum_variant: (type_identifier_name)
+      enum_variant: (type_identifier_name))))
+
+====================================
+variant with fields is a constructor
+====================================
+
+let x = Enum::Variant { a: 1 };
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (type_constructor
+      type_name: (concrete_type_annotation
+        enum_name: (type_identifier
+          name: (type_identifier_name))
+        enum_variant: (type_identifier_name))
+      fields: (fields
+        (field
+          field_name: (identifier)
+          field_initializer: (literal
+            (int)))))))
+
+=======================
+variant inside an array
+=======================
+
+let x = [Enum::Variant];
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (collection
+      (collection_elements
+        (enum_literal
+          enum_name: (type_identifier
+            name: (type_identifier_name))
+          enum_variant: (type_identifier_name))))))
+
+==============================
+nested variant inside an array
+==============================
+
+let x = [Enum::Inner::Variant];
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (collection
+      (collection_elements
+        (enum_literal
+          enum_name: (type_identifier
+            name: (type_identifier_name))
+          enum_variant: (type_identifier_name)
+          enum_variant: (type_identifier_name))))))
+
+=====================================
+array type annotation is still a type
+=====================================
+
+let x: [Int] = y;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation
+      array_type: (type_annotation))
+    initializer: (identifier)))
+
+====================
+turbofish is neither
+====================
+
+let x = id::<Int>(1);
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    initializer: (call
+      callee: (generic_instantiation
+        function: (identifier)
+        generics: (generic_type_parameters
+          type: (type_annotation)))
+      args: (arguments
+        (argument
+          (literal
+            (int)))))))
+
+===========================
+variant in a match arm body
+===========================
+
+e match
+| _ => Enum::Variant
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (enum_literal
+          enum_name: (type_identifier
+            name: (type_identifier_name))
+          enum_variant: (type_identifier_name))))))
+
+==========================
+variant as a call argument
+==========================
+
+f(Enum::Variant)
+
+---
+
+(source_file
+  (call
+    callee: (identifier)
+    args: (arguments
+      (argument
+        (enum_literal
+          enum_name: (type_identifier
+            name: (type_identifier_name))
+          enum_variant: (type_identifier_name))))))

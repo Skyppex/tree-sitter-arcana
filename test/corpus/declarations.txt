@@ -1,0 +1,285 @@
+===============================
+declaration without initializer
+===============================
+
+let x: Int;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation)))
+
+=============================
+declaration with literal type
+=============================
+
+let x: #3;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation
+      (literal_type
+        (literal
+          (int))))))
+
+===================================
+declaration with named literal type
+===================================
+
+let x: #Int;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation
+      (literal_type
+        literal_type_name: (type_identifier_name)))))
+
+===================
+mutable declaration
+===================
+
+let mut x: Int = 1;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation)
+    initializer: (literal
+      (int))))
+
+=========================
+destructuring declaration
+=========================
+
+let { x, y } = p;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (constructor_fields
+        fields: (constructor_field
+          field_pattern: (identifier))
+        fields: (constructor_field
+          field_pattern: (identifier))))
+    initializer: (identifier)))
+
+===================
+nested generic type
+===================
+
+let f: Foo<Foo<Int>> = 1;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation
+      (concrete_type_annotation
+        type_name: (type_identifier_name)
+        (generic_type_parameters
+          type: (type_annotation
+            (concrete_type_annotation
+              type_name: (type_identifier_name)
+              (generic_type_parameters
+                type: (type_annotation)))))))
+    initializer: (literal
+      (int))))
+
+========================
+function type annotation
+========================
+
+let f: fun(Int, Float): Int = 1;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation
+      param_types: (type_annotation)
+      param_types: (type_annotation)
+      return_type: (type_annotation))
+    initializer: (literal
+      (int))))
+
+===========================
+nested enum type annotation
+===========================
+
+let x: Outer::Inner = v;
+
+---
+
+(source_file
+  (variable_declaration
+    pattern: (pattern
+      (binding_pattern))
+    type: (type_annotation
+      (concrete_type_annotation
+        enum_name: (type_identifier
+          name: (type_identifier_name))
+        enum_variant: (type_identifier_name)))
+    initializer: (identifier)))
+
+===================================
+public struct with access modifiers
+===================================
+
+pub struct Point { pub x: Int, y: Int }
+
+---
+
+(source_file
+  (struct_declaration
+    (access_modifier)
+    identifier: (type_identifier
+      name: (type_identifier_name))
+    fields: (struct_fields
+      (struct_field
+        (access_modifier)
+        field_name: (identifier)
+        field_type: (type_annotation))
+      (struct_field
+        field_name: (identifier)
+        field_type: (type_annotation)))))
+
+=====================
+super access modifier
+=====================
+
+sup fun helper(): Int => 1
+
+---
+
+(source_file
+  (function_declaration
+    (access_modifier)
+    identifier: (function_type_identifier
+      name: (function_type_identifier_name))
+    return_type: (type_annotation)
+    body: (literal
+      (int))))
+
+==========================
+function with where clause
+==========================
+
+fun f<T>(x: T): T where T is Show and Eq => x
+
+---
+
+(source_file
+  (function_declaration
+    identifier: (function_type_identifier
+      name: (function_type_identifier_name)
+      generics: (generic_type_parameters
+        type: (type_annotation
+          (concrete_type_annotation
+            type_name: (type_identifier_name)))))
+    params: (parameters
+      (parameter
+        param_name: (identifier)
+        param_type: (type_annotation
+          (concrete_type_annotation
+            type_name: (type_identifier_name)))))
+    return_type: (type_annotation
+      (concrete_type_annotation
+        type_name: (type_identifier_name)))
+    where_clauses: (where_clauses
+      (where_clause
+        type_name: (type_identifier_name)
+        protocol_name: (type_annotation
+          (concrete_type_annotation
+            type_name: (type_identifier_name)))
+        protocol_name: (type_annotation
+          (concrete_type_annotation
+            type_name: (type_identifier_name)))))
+    body: (identifier)))
+
+===========================
+protocol and implementation
+===========================
+
+proto Show { fun show(): String; }
+imp Show for Point { fun show(): String => "p" }
+
+---
+
+(source_file
+  (protocol_declaration
+    name: (type_identifier
+      name: (type_identifier_name))
+    (function_declaration
+      identifier: (function_type_identifier
+        name: (function_type_identifier_name))
+      return_type: (type_annotation)))
+  (implementation_declaration
+    protocol_name: (type_identifier
+      name: (type_identifier_name))
+    type_name: (type_identifier
+      name: (type_identifier_name))
+    (function_declaration
+      identifier: (function_type_identifier
+        name: (function_type_identifier_name))
+      return_type: (type_annotation)
+      body: (literal
+        (string
+          (string_content))))))
+
+=====================
+for loop with pattern
+=====================
+
+for (a, b) in xs => a
+
+---
+
+(source_file
+  (for
+    pattern: (pattern
+      (tuple_pattern
+        (pattern
+          (binding_pattern))
+        (pattern
+          (binding_pattern))))
+    iterable: (identifier)
+    body: (identifier)))
+
+========================
+for loop with at binding
+========================
+
+for p @ { x } in xs => x
+
+---
+
+(source_file
+  (for
+    pattern: (pattern
+      (binding_pattern
+        (pattern
+          (constructor_fields
+            fields: (constructor_field
+              field_pattern: (identifier))))))
+    iterable: (identifier)
+    body: (identifier)))

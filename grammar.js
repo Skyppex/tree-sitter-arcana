@@ -2,7 +2,13 @@ const PREC = {
   COMMENT: -100,
   CONDITIONAL: -3,
   CLOSURE: -2,
+  // Below LITERAL, so `E::V { .. }` is a constructor rather than a braceless
+  // variant followed by a block.
+  ENUM_LITERAL: -1,
   MATCH: 1,
+  // Above BITWISE_OR: inside a match, a leading `|` starts the next arm rather
+  // than continuing the previous arm's body as a bitwise-or.
+  MATCH_ARM: 7,
   ASSIGNMENT: 0,
   DEFAULT: 0,
   EXPRESSION: 0,
@@ -30,7 +36,13 @@ const PREC = {
 module.exports = grammar({
   name: "arcana",
 
-  conflicts: ($) => [[$.struct_field], [$.indexer, $.collection_elements]],
+  conflicts: ($) => [
+    [$.struct_field],
+    [$.indexer, $.collection_elements],
+    // `a::` may be a module path or the start of a turbofish; the `<` after it
+    // is what tells them apart.
+    [$.mod_path, $._expression],
+  ],
 
   rules: {
     source_file: ($) =>
@@ -61,11 +73,10 @@ module.exports = grammar({
     block_comment: (_) => seq("/-", /[^-]*-+([^/-][^-]*-+)*/, "/"),
     identifier: (_) => prec(PREC.IDENTIFIER, /[_a-z][_a-z\d]*/),
     type_identifier_name: (_) => prec(PREC.IDENTIFIER, /[A-Z]\w*/),
-    generic_identifier: (_) => prec(PREC.IDENTIFIER, /T\w*/),
     function_type_identifier_name: (_) =>
       prec(PREC.IDENTIFIER, /[_a-z][_a-z\d]*/),
 
-    access_modifier: (_) => "pub",
+    access_modifier: (_) => choice("pub", "sup"),
 
     mod: ($) => seq(optional($.access_modifier), "mod", $.mod_path, ";"),
 
@@ -299,13 +310,10 @@ module.exports = grammar({
         ),
       ),
 
+    // One rule for both `struct Foo<T>` and `Foo<Int>`: they are the same shape,
+    // and which is meant follows from where it appears rather than from
+    // anything syntactic.
     generic_type_parameters: ($) =>
-      prec(
-        PREC.DEFAULT,
-        seq("<", type_parameters($, $.generic_identifier), ">"),
-      ),
-
-    concrete_type_parameters: ($) =>
       prec(
         PREC.DEFAULT,
         seq("<", type_parameters($, $.type_identifier_name), ">"),
@@ -332,8 +340,8 @@ module.exports = grammar({
 
     where_clause: ($) =>
       seq(
-        choice(field("type_name", $.generic_identifier), "imp"),
-        ":",
+        field("type_name", $.type_identifier_name),
+        "is",
         sep1("and", field("protocol_name", $.type_annotation)),
       ),
 
@@ -351,14 +359,29 @@ module.exports = grammar({
           "String",
           seq("[", field("array_type", $.type_annotation), "]"),
           seq("(", sepTrailing1(",", $.type_annotation), ")"),
-          seq(
-            "fun",
-            "(",
-            sepTrailing(",", "param_types", $.type_annotation),
-            ")",
-            optional(afterColon(field("return_type", $.type_annotation))),
+          prec.right(
+            seq(
+              "fun",
+              "(",
+              sepTrailing(",", "param_types", $.type_annotation),
+              ")",
+              optional(afterColon(field("return_type", $.type_annotation))),
+            ),
           ),
+          $.literal_type,
           choice($.concrete_type_annotation, $.qualified_type_annotation),
+        ),
+      ),
+
+    // A type inhabited by one value: `#3` is the type of that exact `3`, and
+    // `#Int` the type of any int literal.
+    literal_type: ($) =>
+      seq(
+        "#",
+        choice(
+          $.literal,
+          seq(field("sign", choice("+", "-")), choice($.int, $.float)),
+          field("literal_type_name", $.type_identifier_name),
         ),
       ),
 
@@ -367,28 +390,28 @@ module.exports = grammar({
         choice(
           seq(
             field("type_name", $.type_identifier_name),
-            optional($.concrete_type_parameters),
+            optional($.generic_type_parameters),
           ),
-          seq(
-            field("enum_name", $.type_identifier_name),
-            optional($.concrete_type_parameters),
-            "::",
-            field("enum_variant", $.type_identifier_name),
-          ),
+          $._enum_variant_path,
+        ),
+      ),
+
+    // `E::V`, and through nested enums `E::Inner::V`. The leading segment names
+    // the enum; every segment after it names a variant of the one before.
+    //
+    // Hidden, so the segments land on whichever rule uses it. Its head is a
+    // `type_identifier` so that this and `static_member_function` share a
+    // prefix: which one it is only shows up at the name after `::`.
+    _enum_variant_path: ($) =>
+      prec.right(
+        seq(
+          field("enum_name", $.type_identifier),
+          repeat1(seq("::", field("enum_variant", $.type_identifier_name))),
         ),
       ),
 
     qualified_type_annotation: ($) =>
       prec.left(seq($.mod_path, "::", $.concrete_type_annotation)),
-
-    function_type_annotation: ($) =>
-      prec(
-        PREC.IDENTIFIER,
-        seq(
-          field("name", $.function_type_identifier_name),
-          optional(field("generics", seq("::", $.generic_type_parameters))),
-        ),
-      ),
 
     _expression: ($) =>
       prec.left(
@@ -412,6 +435,8 @@ module.exports = grammar({
           $.call,
           $.member,
           $.type_constructor,
+          $.enum_literal,
+          $.generic_instantiation,
           $.static_member_function,
           $.literal,
           $.tuple,
@@ -505,15 +530,14 @@ module.exports = grammar({
     },
 
     variable_declaration: ($) =>
-      prec.left(
+      prec.right(
         PREC.DECLARATION,
         seq(
           "let",
           optional("mut"),
           field("pattern", $.pattern),
           optional(field("type", afterColon($.type_annotation))),
-          "=",
-          field("initializer", $._expression),
+          optional(seq("=", field("initializer", $._expression))),
         ),
       ),
 
@@ -560,7 +584,7 @@ module.exports = grammar({
           "->",
           optional(seq("|", field("params", $.closure_parameters), "|")),
           optional(field("return_type", afterColon($.type_annotation))),
-          fatArrowOrBlock($, "body"),
+          closureBody($, "body"),
         ),
       ),
 
@@ -584,7 +608,7 @@ module.exports = grammar({
           optional(field("params", $.closure_parameters)),
           "|",
           optional(field("return_type", afterColon($.type_annotation))),
-          fatArrowOrBlock($, "body"),
+          closureBody($, "body"),
         ),
       ),
 
@@ -607,8 +631,10 @@ module.exports = grammar({
       prec.left(
         PREC.MATCH,
         seq(
-          optional(seq($.match_arm, ",")),
-          sepTrailing1(",", seq("|", $.match_arm)),
+          optional("|"),
+          $.match_arm,
+          repeat(prec(PREC.MATCH_ARM, seq(optional(","), "|", $.match_arm))),
+          optional(","),
           comments($),
         ),
       ),
@@ -624,6 +650,8 @@ module.exports = grammar({
         PREC.DEFAULT,
         choice(
           $.constructor,
+          $.constructor_fields,
+          $.comparison_pattern,
           $.collection_pattern,
           $.tuple_pattern,
           $.binding_pattern,
@@ -650,16 +678,20 @@ module.exports = grammar({
       prec.left(
         PREC.MATCH,
         choice(
+          seq(field("type", $.type_annotation), optional($._variant_tail)),
           seq(
-            field("type", $.type_annotation),
-            optional(field("fields", $.constructor_fields)),
-          ),
-          seq(
-            seq("::", field("type", $.type_annotation)),
-            repeat(seq("::", field("type", $.type_annotation))),
-            optional(field("fields", $.constructor_fields)),
+            repeat1(seq("::", field("variant", $.type_identifier_name))),
+            optional($._variant_tail),
           ),
         ),
+      ),
+
+    // What follows a constructor: its fields, or a binding of the value it
+    // matched. Never both — `@` is how to ask for both.
+    _variant_tail: ($) =>
+      choice(
+        field("fields", $.constructor_fields),
+        field("binding", $.binding_pattern),
       ),
 
     constructor_fields: ($) =>
@@ -697,6 +729,16 @@ module.exports = grammar({
         ),
       ),
 
+    // `< 5`, `>= x` — a bound is a number, a rune or a variable holding one.
+    comparison_pattern: ($) =>
+      prec.left(
+        PREC.MATCH,
+        seq(
+          field("operator", choice("<", ">", "<=", ">=")),
+          field("bound", choice($.int, $.uint, $.float, $.rune, $.identifier)),
+        ),
+      ),
+
     collection_pattern: ($) =>
       prec(PREC.MATCH, seq("[", sepTrailing(",", "patterns", $.pattern), "]")),
 
@@ -725,35 +767,29 @@ module.exports = grammar({
       prec.right(
         PREC.LITERAL,
         seq(
-          field("type_name", $.type_annotation),
-          optional(seq("::", field("member_type_name", $.type_annotation))),
+          field(
+            "type_name",
+            choice($.concrete_type_annotation, $.qualified_type_annotation),
+          ),
           "{",
           optional(field("fields", $.fields)),
           "}",
         ),
       ),
 
-    struct_literal: ($) =>
-      prec.right(
-        PREC.LITERAL,
-        seq(
-          field("struct_name", $.type_annotation),
-          "{",
-          optional(field("fields", $.fields)),
-          "}",
-        ),
-      ),
+    // `E::V`, `E::Inner::V` — a variant that sets no fields needs no braces.
+    // Below LITERAL so a following `{` is read as the variant's fields.
+    enum_literal: ($) => prec.right(PREC.ENUM_LITERAL, $._enum_variant_path),
 
-    enum_literal: ($) =>
-      prec.right(
-        PREC.LITERAL,
+    // `id::<Int>`, the turbofish. It names a generic function's type arguments
+    // at the use site, and a call may follow it.
+    generic_instantiation: ($) =>
+      prec.left(
+        PREC.CALL,
         seq(
-          field("enum_name", $.type_annotation),
+          field("function", $._expression),
           "::",
-          field("enum_variant_name", $.type_identifier_name),
-          "{",
-          optional(field("fields", $.fields)),
-          "}",
+          field("generics", $.generic_type_parameters),
         ),
       ),
 
@@ -847,6 +883,12 @@ module.exports = grammar({
   },
 });
 
+// A closure's body is any expression, and its `=>` is optional — unlike an
+// `if`, `while`, `for` or `fun` body, which needs `=>` or a block.
+function closureBody($, exprFieldName) {
+  return seq(optional("=>"), field(exprFieldName, $._expression));
+}
+
 function fatArrowOrBlock($, exprFieldName) {
   return choice(
     seq("=>", field(exprFieldName, $._expression)),
@@ -878,13 +920,15 @@ function type_parameters($, identifier_rule) {
   return sepTrailing1(
     ",",
     choice(
-      field("type_name", identifier_rule),
       seq(
         field("type_name", identifier_rule),
         "=",
         field("associated_type_name", $.type_identifier_name),
       ),
       seq("[", optional(".."), identifier_rule, "]"),
+      // A whole type, which covers a bare parameter name as well as
+      // `Foo<Foo<Int>>` and `Foo<[Int]>`.
+      field("type", $.type_annotation),
     ),
   );
 }

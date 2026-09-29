@@ -1,0 +1,479 @@
+===================
+unqualified variant
+===================
+
+e match
+| ::A => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+===================
+nested variant path
+===================
+
+e match
+| ::Inner::B => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            variant: (type_identifier_name)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+=================
+deep variant path
+=================
+
+e match
+| ::A::B::C => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            variant: (type_identifier_name)
+            variant: (type_identifier_name)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+======================
+qualified variant path
+======================
+
+e match
+| E::Inner::B => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            type: (type_annotation
+              (concrete_type_annotation
+                enum_name: (type_identifier
+                  name: (type_identifier_name))
+                enum_variant: (type_identifier_name)
+                enum_variant: (type_identifier_name)))))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+===================
+variant with fields
+===================
+
+e match
+| ::A { v } => v,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            fields: (constructor_fields
+              fields: (constructor_field
+                field_pattern: (identifier)))))
+        body: (identifier))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+====================
+variant with binding
+====================
+
+e match
+| ::A a => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            binding: (binding_pattern)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+=========================
+variant path with binding
+=========================
+
+e match
+| ::Inner::B b => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            variant: (type_identifier_name)
+            binding: (binding_pattern)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+==========
+at binding
+==========
+
+e match
+| a @ ::A => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (binding_pattern
+            (pattern
+              (constructor
+                variant: (type_identifier_name)))))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+======================
+at binding with fields
+======================
+
+e match
+| ::A a @ { v: 1 } => 1,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            binding: (binding_pattern
+              (pattern
+                (constructor_fields
+                  fields: (constructor_field
+                    field_name: (identifier)
+                    field_pattern: (pattern
+                      (int))))))))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+=====================
+at binding in a field
+=====================
+
+e match
+| ::A { v: n @ < 5 } => n,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor
+            variant: (type_identifier_name)
+            fields: (constructor_fields
+              fields: (constructor_field
+                field_name: (identifier)
+                field_pattern: (pattern
+                  (binding_pattern
+                    (pattern
+                      (comparison_pattern
+                        bound: (int)))))))))
+        body: (identifier))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+========================
+anonymous struct pattern
+========================
+
+e match
+| { x, y: 1 } => x,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (constructor_fields
+            fields: (constructor_field
+              field_pattern: (identifier))
+            fields: (constructor_field
+              field_name: (identifier)
+              field_pattern: (pattern
+                (int)))))
+        body: (identifier))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+===================
+comparison patterns
+===================
+
+e match
+| < 5 => 1,
+| >= x => 2,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (comparison_pattern
+            bound: (int)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (comparison_pattern
+            bound: (identifier)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+==============
+range patterns
+==============
+
+e match
+| 1..10 => 1,
+| 1..=10 => 2,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (range_pattern
+            start: (int)
+            end: (int)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (range_pattern
+            start: (int)
+            (inclusive)
+            end: (int)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+=============
+tuple pattern
+=============
+
+e match
+| (a, 1, _) => a,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (tuple_pattern
+            (pattern
+              (binding_pattern))
+            (pattern
+              (int))
+            (pattern
+              (wildcard))))
+        body: (identifier))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
+
+================
+literal patterns
+================
+
+e match
+| 1 => 1,
+| 2u => 2,
+| 1.5f => 3,
+| 'c' => 4,
+| "s" => 5,
+| true => 6,
+| unit => 7,
+| _ => 0
+
+---
+
+(source_file
+  (match
+    matchee: (identifier)
+    (match_arms
+      (match_arm
+        pattern: (pattern
+          (int))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (uint))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (float))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (rune))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (string
+            (string_content)))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (bool))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (unit))
+        body: (literal
+          (int)))
+      (match_arm
+        pattern: (pattern
+          (wildcard))
+        body: (literal
+          (int))))))
